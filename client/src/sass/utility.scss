@@ -1,18 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nova+Square&family=Open+Sans:wght@300&display=swap');
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden;
-  // overflow-y: auto;
   font-family: "Poppins", sans-serif;
 
   scrollbar-width: auto;
   scrollbar-color: #4a4b51 #191a1d;
 }
 ::-webkit-scrollbar{
-  // width: 2.5vw;
   max-width: 10px;
 }
 
@@ -25,8 +23,13 @@
 }
 
 body {
+  overflow-x: hidden;
   width: 100%;
   background-color: #191a1d;
+}
+
+.font-unique{
+  font-family: 'Nova Square', sans-serif;
 }
 
 .bg-primary-deep {
@@ -52,6 +55,9 @@ body {
 
 .bg-secondary {
   background: #4a4b51;
+}
+.bg-secondary-deep {
+  background: #303135;
 }
 .bg-secondary-light:hover {
   background: #5a5b63;

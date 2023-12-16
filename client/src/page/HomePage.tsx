@@ -1,10 +1,14 @@
+import Carousel from "../components/Carousel"
 import Spotlight from "../components/Spotlight"
+
+
 
 
 function HomePage() {
   return (
-    <div className="min-h-[2000px] bg-primary-deep w-full">
+    <div className=" bg-primary-deep w-[100vw]">
       <Spotlight />
+      <Carousel/>
     </div>
   )
 }
