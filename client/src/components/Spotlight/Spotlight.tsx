@@ -1,7 +1,7 @@
 import SpotlightCard from "./SpotlightCard"
 import { useEffect, useRef, useState } from 'react'
 
-import spotlightData from "../falseData"
+import spotlightData from "../../falseData"
 
 function Spotlight() {
   const scroller = useRef<HTMLDivElement>(null)
@@ -86,8 +86,8 @@ function Spotlight() {
         <div className={`flex flex-row flex-nowrap justify-start m-auto items-center scroller w-[100%] select-none ${mousedown? 'cursor-grabbing':'cursor-grab'}`} ref={scroller}>
             {
               spotlightData.map((card, index)=> {
-                return (
-                  <SpotlightCard img={card.img} title={card.title} genre={card.genre} des={card.description} duration={card.duration} releasedOn={card.releasedOn} index={index} />
+                return (      
+                    <SpotlightCard img={card.img} title={card.title} genre={card.genre} des={card.description} duration={card.duration} releasedOn={card.releasedOn} index={index} key={index} />
                 )
               })
             }
@@ -105,7 +105,7 @@ function Spotlight() {
         <div className="map">
            <div className={`current flex justify-center items-center flex-col sm:flex-row absolute right-[10px] sm:right-[50%] sm:translate-x-[50%] sm:bottom-[5px] bottom-[10px] text-white text-[10px] gap-[10px]`} ref={progressBar}>
             {
-              spotlightData.map((item, index) => {
+              spotlightData.map((_item,  index) => {
                 return (
                   <i className={`sp-card bx bxs-circle cursor-pointer ${active === index ? 'active':''}`} onClick={()=> mapHandler(index)} key={index}></i>
                 )
@@ -119,50 +119,3 @@ function Spotlight() {
 }
 
 export default Spotlight
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// <div className="relative max-w-[110rem] m-auto flex">
-//       <div className="flex">
-
-//         <SpotlightCard index={1}/>
-
-    
-        
-//         <div className="buttons absolute right-[10px] bottom-[10px] hidden sm:flex flex-col justify-center items-center gap-[5px]">
-//           <div className="left bg-spacial-hover flex-center p-[4px] text-[32px] bg-secondary-deep text-white rounded-[5px] cursor-pointer" onClick={() => console.log('left')} >
-//             <i className='bx bx-chevron-left'></i>
-//           </div>
-//           <div className="right bg-spacial-hover flex-center p-[4px] text-[32px] bg-secondary-deep text-white rounded-[5px] cursor-pointer" onClick={() =>  console.log('right')} >
-//             <i className='bx bx-chevron-right' ></i>
-//           </div>
-//         </div>
- 
-//         <div className="map">
-//           <div className={`current flex flex-col sm:flex-row absolute right-[10px] sm:right-[50%] sm:translate-x-[50%] sm:bottom-0 bottom-[10px] text-white text-[10px] gap-[10px]`}>
-//           <i className='sp-card bx bxs-circle text-yellow-500 cursor-pointer'></i>
-//           <i className='sp-card bx bxs-circle cursor-pointer'></i>
-//           <i className='sp-card bx bxs-circle cursor-pointer'></i>
-//           <i className='sp-card bx bxs-circle cursor-pointer'></i>
-//           <i className='sp-card bx bxs-circle cursor-pointer'></i>
-//           <i className='sp-card bx bxs-circle cursor-pointer'></i>
-//           <i className='sp-card bx bxs-circle cursor-pointer'></i>
-//           <i className='sp-card bx bxs-circle cursor-pointer'></i>
-//           <i className='sp-card bx bxs-circle cursor-pointer'></i>
-//           </div>
-//         </div>
-
-//       </div>
-//     </div>

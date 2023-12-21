@@ -11,11 +11,11 @@ interface SpotlightCardProps {
 }
 
 const SpotlightCard: React.FC<SpotlightCardProps> =({img, title, des, genre, duration, releasedOn, index}) => {
-
+ 
   
   
   return (
-    <div className="cards bg-red flex justify-center items-center max-w-[100%] w-[100%] shrink-0" key={index} >
+    <div className="cards flex justify-center items-center max-w-[100%] w-[100%] shrink-0 " key={index} >
       <div className="spotlight w-[100%]  max-w-[100%] sm:h-[23rem] h-[18rem] md:h-[28rem] xl:h-[35rem] 2xl:h-[38rem] ">
         <div className="cover-spotlight max-w-[100%] absolute top-0 left-[0px] flex-center ">
           <img src={img} alt="spotlight" className="" />

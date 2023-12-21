@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 
 //assets
-import logo from '../assets/logo-zoro.png'
-import { useLocation } from 'react-router-dom'
+import logo from '../../assets/logo-zoro.png'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function Header() {
   const [language, setLanguage] = useState('ENG')
@@ -10,18 +10,27 @@ function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
   const location = useLocation
+  const navigate = useNavigate();
   
   useEffect(() => {
         window.scrollTo(0, 0)
-    }, [location])
+  }, [location])
+
+  useEffect(() => {
+    if(showMobileMenu) {
+      document.body.style.overflowY = 'hidden'
+    }else {
+      document.body.style.overflowY = 'auto'
+    }
+  }, [showMobileMenu, setShowMobileMenu])
 
   const mobMenu = useRef<HTMLDivElement>(null);
 
   
   return (
     <>
-    <div className={`bg-primary-header wrapper xl:fixed top-0 left-0 min-w-[100%] z-50 selection-off`}>
-      <header className="w-full max-w-[110rem] m-auto flex justify-between items-center px-[.8rem] py-[.6rem]">
+    <div className={`bg-primary-header wrapper  top-0 left-0 min-w-[100%] z-50 selection-off pb-[.2rem] pt-[.6rem]`}>
+      <header className="w-full max-w-[110rem] m-auto flex justify-between items-center px-[.8rem] pb-[.4rem]">
         <div className="left-nav flex justify-between items-center gap-[5px]">
           <i className='bx bx-menu text-[30px] cursor-pointer text-unique' onClick={() => setShowMobileMenu(true)}></i>
           <div className="logo px-[7px]">
@@ -30,7 +39,7 @@ function Header() {
 
           {/* ........................................SearchBox................................ */}
             <div className="w-[19rem] 2xl:w-[27rem] rounded-[5px] bg-white hidden xl:flex xl:justify-between xl:items-center mx-[5px]">
-              <input type="text" className="pl-[1rem] py-[.4rem] flex-1 outline-none border-none rounded-[5px]" placeholder="Search for Anime..." /> 
+              <input type="text" name='searchBox' className="pl-[1rem] py-[.4rem] flex-1 outline-none border-none rounded-[5px]" placeholder="Search for Anime..." /> 
 
               <div className="buttons flex-center gap-2 px-2">
                 <i className="bx bx-search text-black text-[20px] cursor-pointer"></i>
@@ -61,13 +70,13 @@ function Header() {
           </div>
         </div>
       </header>
-      <div className={` ${showSearchBox ? 'flex':'hidden'} mobile-search-box my-[5px] gap-[5px] mx-[20px] xl:hidden`}>
+      <div className={` ${showSearchBox ? 'flex':'hidden'} mobile-search-box my-[5px] gap-[5px] mx-[.8rem] xl:hidden pl-[4px]`}>
         <div className="filter-button px-[8px] py-[0px] rounded-[5px] bg-secondary flex-center cursor-pointer">
           <i className='bx bxs-filter-alt text-[18px] text-white'></i>
         </div>
-        <div className="rounded-[5px] overflow-hidden bg-white xl:hidden flex flex-1 justify-between items-center ">
-              <input type="text" className="px-[1rem] py-[.4rem] flex-1 outline-none border-none" placeholder="Search for Anime..." /> 
-              <div className="buttons flex-center gap-2 px-2">
+        <div className="rounded-[5px] overflow-hidden bg-white xl:hidden flex flex-1 justify-between items-center px-[1rem]">
+              <input type="text" name='searchBox' className=" py-[.4rem] w-[80%] text-[15px] md:text-[16px] outline-none border-none" placeholder="Search for Anime..." /> 
+              <div className="buttons flex-center text-black">
                 <i className="bx bx-search text-black text-[20px] cursor-pointer"></i>
               </div> 
             </div>
@@ -79,9 +88,9 @@ function Header() {
       }
     }} >
 
-      <div className={`${showMobileMenu ? 'translate-x-[0px]':'-translate-x-full'} slidin left-0 menu-section absolute top-0 glass-bg flex flex-col min-h-screen min-w-[20rem] text-white`} ref={mobMenu} >
+      <div className={`${showMobileMenu ? 'translate-x-[0px]':'-translate-x-full'} mob-menu slidin left-0 absolute top-0 glass-bg flex flex-col min-h-[100vh] min-w-[16rem] text-white overflow-auto`} ref={mobMenu} >
 
-        <div className="close-menu flex-center max-w-[9rem] gap-[2px] px-[2px] py-[4px] mx-[14px] my-[20px] cursor-pointer glass-bg-dark bg-secondary-light rounded-[20px]" onClick={() => setShowMobileMenu(false)}>
+        <div className="close-menu flex-center max-w-[9rem] gap-[2px] px-[2px] py-[4px] mx-[14px] my-[10px] md:my-[15px] lg:my-[20px] cursor-pointer glass-bg-dark bg-secondary-light rounded-[20px]" onClick={() => setShowMobileMenu(false)}>
           <i className='bx bx-chevron-left text-[20px]'></i>
           <span className='text-[14px]'>Close menu</span>
         </div>
@@ -105,13 +114,13 @@ function Header() {
         <div className="navigation">
           <nav>
             <ul className='nav-links'>
-              <li className='nav-link text-unique-hover'>Home</li>
-              <li className='nav-link text-unique-hover'>Trending</li>
-              <li className='nav-link text-unique-hover'>TV Series</li>
-              <li className='nav-link text-unique-hover'>Movies</li>
-              <li className='nav-link text-unique-hover'>OVAs</li>
-              <li className='nav-link text-unique-hover'>ONAs</li>
-              <li className='nav-link text-unique-hover'>Specials</li>
+              <li className='nav-link text-unique-hover' onClick={() => navigate('/home')}>Home</li>
+              <li className='nav-link text-unique-hover' onClick={() => navigate('/trending')}>Trending</li>
+              <li className='nav-link text-unique-hover' onClick={() => navigate('/tv')}>TV Series</li>
+              <li className='nav-link text-unique-hover' onClick={() => navigate('/movies')}>Movies</li>
+              <li className='nav-link text-unique-hover' onClick={() => navigate('/ovas')}>OVAs</li>
+              <li className='nav-link text-unique-hover' onClick={() => navigate('/onas')}>ONAs</li>
+              <li className='nav-link text-unique-hover' onClick={() => navigate('/spacial')}>Specials</li>
             </ul>
           </nav>
         </div>

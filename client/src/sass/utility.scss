@@ -1,24 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nova+Square&family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 
   scrollbar-width: auto;
   scrollbar-color: #4a4b51 #191a1d;
 }
-::-webkit-scrollbar{
+*::-webkit-scrollbar{
   max-width: 10px;
 }
 
-::-webkit-scrollbar-track{
+*::-webkit-scrollbar-track{
   background: #191a1d;
 }
 
-::-webkit-scrollbar-thumb{
+*::-webkit-scrollbar-thumb{
   background: #4a4b51;
 }
 
@@ -38,6 +41,9 @@ body {
 .bg-primary {
   background: #2a2c31;
 }
+.bg-primary-light {
+  background: #27292d;
+}
 .bg-primary-header {
   background: #2a2c31;
 
@@ -53,14 +59,23 @@ body {
   background: aqua;
 }
 
+.bg-secondary-hover:hover {
+  background: #3f3f45;
+}
 .bg-secondary {
   background: #4a4b51;
 }
 .bg-secondary-deep {
   background: #303135;
 }
-.bg-secondary-light:hover {
+.bg-secondary-light {
   background: #5a5b63;
+}
+.bg-secondary-light-hover:hover {
+  background: #5a5b63;
+}
+.bg-secondary-grandiet {
+  background-image: linear-gradient(#5a5b63, #303135);
 }
 .bg-spacial {
   background: #daf86f;
@@ -129,4 +144,17 @@ body {
 .lighter-weight {
   font-weight: 300;
   font-family: 'Open Sans', sans-serif;
+}
+.lighter-font {
+  font-weight: 300;
+}
+.font-light-gray {
+  color: #c2c2c2;
+}
+.cover-image {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      object-fit: cover;
+      object-position: center;
 }

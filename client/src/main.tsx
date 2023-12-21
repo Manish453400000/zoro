@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './main.css'
 import './sass/utility.scss'
+import './sass/media.scss'
 import './sass/component.scss'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
