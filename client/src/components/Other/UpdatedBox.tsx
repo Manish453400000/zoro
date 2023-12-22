@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import ContentWraper from '../ContentWraper'
 import UpdateCard from './UpdateCard'
 
 const UpdatedBox = () => {
   const [activeLng, setActiveLng] = useState('all')
   return (
-    <div className=' lg:w-[70%] xl:w-[75%]'>
+    <div className=' w-100%'>
       <ContentWraper>
 
         <div className="head-title mt-[40px] relative">
@@ -29,7 +29,7 @@ const UpdatedBox = () => {
            </div>
         </div>
 
-        <div className="container-update py-[20px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-[12px]">
+        <div className="container-update py-[20px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 2xl:grid-cols-6 gap-[12px]">
           <UpdateCard />
           <UpdateCard />
           <UpdateCard />

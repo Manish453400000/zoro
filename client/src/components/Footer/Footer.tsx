@@ -27,8 +27,6 @@ const Footer = () => {
                 <div className="container flex flex-wrap gap-[10px] w-[90%] justify-center">
                   {
                     arr.map((item, index) => {
-                      console.log(item);
-                      
                       return <Label letter={item} key={index} />
                     })
                   }
