@@ -1,5 +1,8 @@
 import Carousel from "../components/Carousel/Carousel"
+import ContentWraper from "../components/ContentWraper"
+import Genres from "../components/Genres/Genres"
 import ListData from "../components/Other/ListData"
+import MostViewed from "../components/Other/MostViewed"
 import UpdatedBox from "../components/Other/UpdatedBox"
 import Schedule from "../components/Schedule/Schedule"
 import Spotlight from "../components/Spotlight/Spotlight"
@@ -13,12 +16,21 @@ function HomePage() {
       <Spotlight />
       <Carousel/>
       <ListData />
-      <div className="container w-full max-w-[110rem] flex flex-wrap m-auto ">
-        <div className="order-one lg:w-[70%]">
-           <UpdatedBox />
-           <Schedule />
-        </div>
-        <div className="order-two bg-secondary text-white w-[40%]"> ldjsdljsdfsa</div>
+      
+      <div className="container-main my-[20px] mb-[50px] w-full max-w-[110rem] flex flex-wrap m-auto ">
+        <ContentWraper>
+          <div className="wraper flex gap-[30px] flex-col lg:flex-row">
+            <div className="order-one lg:w-[68%] xl:w-[72%]">
+                <UpdatedBox />
+                <Schedule />
+            </div>
+            <div className="order-two  flex-grow ">
+              <Genres />
+              <MostViewed />
+            </div>
+          </div>
+        </ContentWraper>
+        
       </div>
     </div>
   )

@@ -3,7 +3,7 @@ import poster from '../../assets/poster/poster2.jpg'
 
 const List = () => {
   return (
-     <div className={`py-[8px] px-[1rem] bg-secondary-deep bg-secondary-hover flex gap-[10px] cursor-pointer`}>
+     <div className={` py-[8px] px-[1rem] bg-secondary-deep bg-secondary-hover flex gap-[10px] cursor-pointer`}>
           <div className="poster">
             <img src={poster} alt="" />
           </div>

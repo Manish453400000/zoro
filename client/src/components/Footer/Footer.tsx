@@ -21,10 +21,10 @@ const Footer = () => {
 
               <div className="az-list flex flex-col items-center justify-center">
                 <div className="head text-white flex items-center gap-[1rem] md:gap-[2rem] m-auto py-[10px]">
-                  <h5 className='text-[18px] md:text-[20px] border-right px-[20px] font-extrabold'>A - Z List</h5>
+                  <h5 className=' text-[16px] sm:text-[18px] md:text-[20px] border-right px-[20px] font-extrabold'>A - Z List</h5>
                   <span className='text-[12px] md:text-[14px]'>Searching anime order by alphabet name A to Z.</span>
                 </div>
-                <div className="container flex flex-wrap gap-[10px] w-[90%] justify-center">
+                <div className="container hidden sm:flex flex-wrap gap-[10px] w-[90%] justify-center">
                   {
                     arr.map((item, index) => {
                       return <Label letter={item} key={index} />

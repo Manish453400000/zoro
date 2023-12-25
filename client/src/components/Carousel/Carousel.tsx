@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 
 import ContentWraper from '../ContentWraper'
 import ShowCard from './ShowCard'

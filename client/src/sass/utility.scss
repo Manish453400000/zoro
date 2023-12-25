@@ -14,7 +14,7 @@
   scrollbar-color: #4a4b51 #191a1d;
 }
 *::-webkit-scrollbar{
-  max-width: 10px;
+  max-width: 3px;
 }
 
 *::-webkit-scrollbar-track{
@@ -22,7 +22,7 @@
 }
 
 *::-webkit-scrollbar-thumb{
-  background: #4a4b51;
+  background: #718039;
 }
 
 body {
@@ -157,4 +157,8 @@ body {
       overflow: hidden;
       object-fit: cover;
       object-position: center;
+}
+.spacial-active-btn {
+  background: #daf86f;
+  color: black;
 }

@@ -1,12 +1,10 @@
 import  { useState } from 'react'
-import ContentWraper from '../ContentWraper'
 import UpdateCard from './UpdateCard'
 
 const UpdatedBox = () => {
   const [activeLng, setActiveLng] = useState('all')
   return (
     <div className=' w-100%'>
-      <ContentWraper>
 
         <div className="head-title mt-[40px] relative">
            <div className="head flex justify-between items-center text-white w-[100%] 
@@ -43,7 +41,6 @@ const UpdatedBox = () => {
           <UpdateCard />
           <UpdateCard />
         </div>
-      </ContentWraper>
     </div>
   )
 }
