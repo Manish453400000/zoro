@@ -19,7 +19,7 @@ function HomePage() {
       
       <div className="container-main my-[20px] mb-[50px] w-full max-w-[110rem] flex flex-wrap m-auto ">
         <ContentWraper>
-          <div className="wraper flex gap-[30px] flex-col lg:flex-row">
+          <div className="wraper flex md:gap-[30px] flex-col lg:flex-row">
             <div className="order-one lg:w-[68%] xl:w-[72%]">
                 <UpdatedBox />
                 <Schedule />

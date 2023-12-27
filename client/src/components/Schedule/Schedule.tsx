@@ -53,7 +53,7 @@ const Schedule = () => {
     }
   ]
   return (
-    <div className='w-[100%]'>
+    <div className='w-[100%] mt-[20px]'>
       
       <div className="head mb-[10px] flex flex-wrap items-start sm:items-center flex-col sm:flex-row sm:gap-[20px]">
           <h5 className='text-unique font-unique text-[26px] lg:text-[28px] whitespace-nowrap'>Estimated Schedule</h5>

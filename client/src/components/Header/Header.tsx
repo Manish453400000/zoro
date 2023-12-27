@@ -2,12 +2,23 @@ import { useState, useRef, useEffect } from 'react'
 
 //assets
 import logo from '../../assets/logo-zoro.png'
+import logCover from '../../assets/cover/bg-cover.jpg'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Login from '../Auth/Login'
+import SignUp from '../Auth/SignUp'
+
 
 function Header() {
   const [language, setLanguage] = useState('ENG')
   const [showSearchBox, setShowSearchBox] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
+  const [showAuthPage, setShowAuthPage] = useState(false)
+  const [isNewUser, setIsNewUser] = useState(false)
+
+
+  const updateParentState = (newValue:boolean) => {
+    setIsNewUser(newValue)
+  };
 
   const location = useLocation
   const navigate = useNavigate();
@@ -16,7 +27,21 @@ function Header() {
         window.scrollTo(0, 0)
   }, [location])
 
+  useEffect(()=> {
+    if(!showAuthPage){
+      setIsNewUser(false)
+    }
+  }, [showAuthPage, setShowAuthPage])
+
   useEffect(() => {
+    if(showAuthPage) {
+      document.body.style.overflowY = 'hidden'
+    }else {
+      document.body.style.overflowY = 'auto'
+    }
+  }, [showAuthPage, setShowAuthPage])
+  useEffect(() => {
+
     if(showMobileMenu) {
       document.body.style.overflowY = 'hidden'
     }else {
@@ -25,6 +50,7 @@ function Header() {
   }, [showMobileMenu, setShowMobileMenu])
 
   const mobMenu = useRef<HTMLDivElement>(null);
+  const authCom = useRef<HTMLDivElement>(null);
 
   
   return (
@@ -33,7 +59,7 @@ function Header() {
       <header className="w-full max-w-[110rem] m-auto flex justify-between items-center px-[.8rem] pb-[.4rem]">
         <div className="left-nav flex justify-between items-center gap-[5px]">
           <i className='bx bx-menu text-[30px] cursor-pointer text-unique' onClick={() => setShowMobileMenu(true)}></i>
-          <div className="logo px-[7px]">
+          <div className="logo px-[7px] cursor-pointer" onClick={() => navigate('/home')}>
             <img src={logo} alt="logo" className="min-w-[6rem] w-[6rem]" />
           </div>
 
@@ -66,8 +92,40 @@ function Header() {
             <i className="bx bx-search xl:hidden text-primary text-[22px] cursor-pointer" onClick={() => setShowSearchBox((state) => !state)}></i>
           </div>
           <div className="login-btn">
-            <button type="button" className="btn bg-spacial">Login</button>
+            <button type="button" className="btn bg-spacial" onClick={() => setShowAuthPage((state) => !state)}>Login</button>
           </div>
+
+          <div className={`${showAuthPage ? '':'hidden'} login-comp absolute top-0 left-0 z-[10]`}
+          onClick={(e) => {
+            if(!authCom.current?.contains(e.target as Node)){
+              setShowAuthPage(false)
+            }
+          }}
+          >
+
+            <div className={`w-[100vw] h-[100vh] bg-[#000000a9] flex justify-center ${showAuthPage ? 'translate-y-[0%]':'translate-y-[-30%] transition-transform'}  items-center`}>
+              
+              <div className="relative w-[90%] max-w-[30rem] " ref={authCom}>
+                <div className="close-btn w-[30px] h-[30px] flex justify-center items-center rounded-[50%] bg-white text-black absolute top-0 right-0 translate-x-[40%] translate-y-[-50%] z-[101]" onClick={() => setShowAuthPage((state) => !state) }>
+                  <i className='bx bx-x text-[26px]'></i>
+                </div>
+              <div className="relative w-[100%] h-[100%] auth-container bg-secondary-deep rounded-[10px] overflow-hidden">
+             
+                <div className="cover-image absolute top-0 left-0 opacity-60 rounded-[10px]">
+                  <img src={logCover} alt="" className='' />
+                </div>
+                <div className="secondary-layer w-[100%] h-[100%] absolute bottom-0 rounded-[10px]"></div>
+                <div className="auths w-full h-full  px-[20px] sm:px-[60px] py-[40px] relative z-40">
+                  {
+                    isNewUser ? <SignUp func={updateParentState}/> : <Login func={updateParentState}/>
+                  }
+                </div>
+              </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </header>
       <div className={` ${showSearchBox ? 'flex':'hidden'} mobile-search-box my-[5px] gap-[5px] mx-[.8rem] xl:hidden pl-[4px]`}>
