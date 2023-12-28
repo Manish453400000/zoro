@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import cookieParser from "cookieParser";
+import cookieParser from "cookie-parser";
 
 import { connectDB } from "./db/connectDB.js";
 

@@ -1,21 +1,36 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: [true, "Please enter a username"],
+      required: [true, "username is required"],
       unique: true,
+      trim: true,
       index: true,
     },
     email: {
       type: String,
-      required: [true, "Please enter a email"],
+      required: [true, "email is required"],
       unique: true,
+      trim: true,
     },
     password: {
       type: String,
-      required: [true, "Please enter a password"],
+      required: [true, "password is required"],
+    },
+    avatar: {
+      type: String, // Cloudinary url
+      required: true,
+    },
+    watchHistory: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Anime",
+      },
+    ],
+    refreshToken: {
+      type: String,
     },
   },
   { timestamps: true }
