@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const episodeSchema = new mongoose.Schema({
     number: {
@@ -35,12 +36,7 @@ const animeSchema = new mongoose.Schema(
             required: [true, "anime description is required"],
         },
         thumbnail: String, //cloudinary url
-        episodes: [
-            {
-                type: episodeSchema,
-                required: true,
-            },
-        ],
+        episodes: [episodeSchema],
         type: String,
         aired: String,
         status: String,
@@ -50,5 +46,7 @@ const animeSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+animeSchema.plugin(mongooseAggregatePaginate);
 
 export const Anime = mongoose.model("Anime", animeSchema);
