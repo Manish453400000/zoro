@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema(
         },
         avatar: {
             type: String, // Cloudinary url
-            required: true,
+            default:
+                "http://res.cloudinary.com/dwl9iesij/image/upload/v1703841893/cegzmjvgus1rghjfnhwf.jpg",
         },
         watchHistory: [
             {
