@@ -4,6 +4,21 @@ import { ApiError } from "../utils/ApiError.js";
 import { cloudinaryUpload } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
+const generateTokens = async (userId) => {
+    try {
+        const user = await User.findById(userId);
+        const accessToken = await user.generateAccessToken();
+        const refreshToken = await user.generateRefreshToken();
+
+        user.refreshToken = refreshToken;
+        await user.save({ validateBeforeSave: false });
+
+        return { accessToken, refreshToken };
+    } catch (e) {
+        throw new ApiError(500, "Something went wrong while generating tokens");
+    }
+};
+
 const createUser = asyncHandler(async (req, res) => {
     //get user details
     const { username, email, password } = req.body;
@@ -41,30 +56,79 @@ const createUser = asyncHandler(async (req, res) => {
         .json(new ApiResponse(201, createdUser, "Registration successful"));
 });
 
-const findUser = asyncHandler(async (req, res) => {
-    const user = await User.find({ email: req.query.email });
-    if (!user[0]) {
-        res.status(404).json({
-            success: false,
-            response: "User not found",
-        });
-        return;
+const loginUser = asyncHandler(async (req, res) => {
+    //get login details
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        throw new ApiError(400, "Email & Password is required");
     }
-    if (user[0].password === req.query.password) {
-        res.status(200).json({
-            success: true,
-            response: {
-                id: user[0]._id,
-                username: user[0].username,
-                email: user[0].email,
-            },
-        });
-    } else {
-        res.status(404).json({
-            success: false,
-            response: "Wrong Password",
-        });
+    //find user from database
+    const user = await User.findOne({ email: email });
+    if (!user) {
+        throw new ApiError(400, "User dose not exist");
     }
+    //cheack password
+    const isPasswordValid = await user.isPasswordCorrect(password);
+    if (!isPasswordValid) {
+        throw new ApiError(401, "Incorrect password");
+    }
+    //access and refresh token
+    const { accessToken, refreshToken } = await generateTokens(user._id);
+
+    const loggedInUser = await User.findById(user._id).select(
+        "-password -refreshToken"
+    );
+    //send cookie
+    const options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(
+                200,
+                {
+                    user: loggedInUser,
+                    accessToken,
+                    refreshToken,
+                },
+                "User logged in successfully",
+                "ok"
+            )
+        );
 });
 
-export { createUser, findUser };
+const logoutUser = asyncHandler(async (req, res) => {
+    //find the user
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $set: {
+                refreshToken: undefined,
+            },
+        },
+        {
+            new: true,
+        }
+    );
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    return res
+        .status(200)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json(new ApiResponse(200, {}, "User logged out"));
+});
+
+const editUser = asyncHandler(async (req, res) => {});
+
+export { createUser, loginUser, editUser, logoutUser };
