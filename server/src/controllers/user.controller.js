@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { cloudinaryUpload } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import jwt from "jsonwebtoken";
 
 const generateTokens = async (userId) => {
     try {
@@ -60,7 +61,7 @@ const loginUser = asyncHandler(async (req, res) => {
     //get login details
     const { email, password } = req.body;
 
-    if (!email || !password) {
+    if (!email && !password) {
         throw new ApiError(400, "Email & Password is required");
     }
     //find user from database
@@ -129,6 +130,48 @@ const logoutUser = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, {}, "User logged out"));
 });
 
+const refreshAcccessToken = asyncHandler(async (req, res) => {
+    // get refreshToken from user
+    const incomingRefreshToken =
+        req.cookies.refreshToken || req.body.refreshToken;
+    if (!incomingRefreshToken) {
+        throw new ApiError(401, "Unauthorized request");
+    }
+    //cheacking refresh token
+    const decodedToken = jwt.verify(
+        incomingRefreshToken,
+        process.env.REFRESH_TOKEN_SECRET
+    );
+
+    //Find user by decoded id
+    const user = await User.findById(decodedToken?._id);
+    if (!user) {
+        throw new ApiError(401, "Invalid refresh token");
+    }
+
+    if (incomingRefreshToken !== user.refreshToken) {
+        throw new ApiError(401, "Refresh token expired");
+    }
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    };
+    const { accessToken, newRefreshToken } = await generateTokens(user._id);
+
+    return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken)
+        .json(
+            new ApiResponse(
+                200,
+                { accessToken, newRefreshToken },
+                "Access Token Refreshed"
+            )
+        );
+});
+
 const editUser = asyncHandler(async (req, res) => {});
 
-export { createUser, loginUser, editUser, logoutUser };
+export { createUser, loginUser, editUser, logoutUser, refreshAcccessToken };

@@ -31,8 +31,8 @@ const SignUp:React.FC<Login> = ({func}) => {
         </div>
 
         <div className="button mt-[10px] flex flex-col gap-[10px]">
-          <button className='w-[100%] py-[8px] bg-spacial text-black rounded-[5px]'>Login</button>
-          <span className='text-white m-auto text-[14px]'>Don't have an account? <span className='text-unique cursor-pointer' onClick={()=> func(false)}>Login</span></span>
+          <button className='w-[100%] py-[8px] bg-spacial text-black rounded-[5px]'>Register</button>
+          <span className='text-white m-auto text-[14px]'>already have an account? <span className='text-unique cursor-pointer' onClick={()=> func(false)}>Login</span></span>
         </div>
       </div>
     </div>
