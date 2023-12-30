@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
     createUser,
     loginUser,
-    editUser,
+    editAvatar,
     logoutUser,
     refreshAcccessToken,
 } from "../controllers/user.controller.js";
@@ -18,7 +18,7 @@ userRouter.route("/login").post(loginUser);
 userRouter.route("/logout").post(verifyJwt, logoutUser);
 userRouter.route("/refresh-token").post(refreshAcccessToken);
 userRouter
-    .route("/edit")
-    .post(upload.fields([{ name: "avatar", maxCount: 1 }]), editUser);
+    .route("/edit/avatar")
+    .post(upload.fields([{ name: "avatar", maxCount: 1 }]), editAvatar);
 
 export { userRouter };

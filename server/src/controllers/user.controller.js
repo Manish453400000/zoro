@@ -162,7 +162,7 @@ const refreshAcccessToken = asyncHandler(async (req, res) => {
     return res
         .status(200)
         .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken)
+        .cookie("refreshToken", newRefreshToken, options)
         .json(
             new ApiResponse(
                 200,
@@ -172,6 +172,39 @@ const refreshAcccessToken = asyncHandler(async (req, res) => {
         );
 });
 
-const editUser = asyncHandler(async (req, res) => {});
+const editAvatar = asyncHandler(async (req, res) => {
+    // get the user from frontend
+    const userToken = req.cookies.accessToken || req.body.accessToken;
+    if (!userToken) {
+        throw new ApiError(401, "Unauthorized Request");
+    }
+    // verify jwt
+    const decodedUser = jwt.verify(userToken, process.env.ACCESS_TOKEN_SECRET);
 
-export { createUser, loginUser, editUser, logoutUser, refreshAcccessToken };
+    // cheack for avatar
+    if (!req.files && !req.files["avatar"]) {
+        throw new ApiError(404, "Avatar not found in the request");
+    }
+    const avatarOnLocalPath = req.files?.avatar[0]?.path;
+    if (!avatarOnLocalPath) {
+        throw new ApiError(401, "Avatar is required");
+    }
+    // updload avatar on cloudinary
+    const avatar = await cloudinaryUpload(avatarOnLocalPath);
+    if (!avatar) {
+        throw new ApiError(500, "Something went wrong while uploading avatar");
+    }
+    // update user data
+    const updatedUser = await User.findByIdAndUpdate(decodedUser?._id, {
+        avatar: avatar.url,
+    });
+    if (!updatedUser) {
+        throw new ApiError(401, "Invalid access token");
+    }
+    // send updated user data to frontend
+    return res
+        .status(200)
+        .json(new ApiResponse(200, updatedUser, "Avatar successfully updated"));
+});
+
+export { createUser, loginUser, editAvatar, logoutUser, refreshAcccessToken };
