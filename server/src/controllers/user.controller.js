@@ -173,33 +173,29 @@ const refreshAcccessToken = asyncHandler(async (req, res) => {
 });
 
 const editAvatar = asyncHandler(async (req, res) => {
-    // get the user from frontend
-    const userToken = req.cookies.accessToken || req.body.accessToken;
-    if (!userToken) {
-        throw new ApiError(401, "Unauthorized Request");
-    }
-    // verify jwt
-    const decodedUser = jwt.verify(userToken, process.env.ACCESS_TOKEN_SECRET);
-
+    // verify jwt by middleware
     // cheack for avatar
-    if (!req.files && !req.files["avatar"]) {
-        throw new ApiError(404, "Avatar not found in the request");
-    }
-    const avatarOnLocalPath = req.files?.avatar[0]?.path;
+    const avatarOnLocalPath = req.file?.path;
     if (!avatarOnLocalPath) {
         throw new ApiError(401, "Avatar is required");
     }
     // updload avatar on cloudinary
     const avatar = await cloudinaryUpload(avatarOnLocalPath);
-    if (!avatar) {
+    if (!avatar.url) {
         throw new ApiError(500, "Something went wrong while uploading avatar");
     }
     // update user data
-    const updatedUser = await User.findByIdAndUpdate(decodedUser?._id, {
-        avatar: avatar.url,
-    });
+    const updatedUser = await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set: {
+                avatar: avatar.url,
+            },
+        },
+        { new: true }
+    ).select("-password");
     if (!updatedUser) {
-        throw new ApiError(401, "Invalid access token");
+        throw new ApiError(500, "Somthing went wrong while updating user");
     }
     // send updated user data to frontend
     return res
@@ -207,4 +203,40 @@ const editAvatar = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, updatedUser, "Avatar successfully updated"));
 });
 
-export { createUser, loginUser, editAvatar, logoutUser, refreshAcccessToken };
+const changePassword = asyncHandler(async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.user?._id);
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
+
+    if (!isPasswordCorrect) {
+        throw new ApiError(400, "Invalid password");
+    }
+
+    user.password = newPassword;
+    await user.save({ validateBeforeSave: false });
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Password updated successfully"));
+});
+
+const getCurrentUser = asyncHandler(async (req, res) => {
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, req.user, "Current user fetched successfully")
+        );
+});
+
+const updateUser = asyncHandler(async (req, res) => {});
+
+export {
+    createUser,
+    loginUser,
+    editAvatar,
+    logoutUser,
+    getCurrentUser,
+    changePassword,
+    refreshAcccessToken,
+};
