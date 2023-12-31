@@ -234,3 +234,13 @@
 .secondary-layer {
   background-image: linear-gradient( #30313592, #303135e8, #303135);
 }
+
+.loading{
+  animation: load 1s ease infinite;
+
+  @keyframes load {
+    100%{
+      rotate: 360deg;
+    }
+  }
+}

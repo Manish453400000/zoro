@@ -20,7 +20,7 @@ const MostViewed = () => {
           {
             Array.from({length: 6}).map((_, i) => {
                return (
-                <div className="item px-[20px] py-[25px] flex gap-[15px] md:gap-[25px] items-center border-bottom-light">
+                <div className="item px-[20px] py-[25px] flex gap-[15px] md:gap-[25px] items-center border-bottom-light" key={i}>
                   <div className="rank">
                     <h5 className='border-bottom-spacial text-[20px] md:text-[22px] font-semibold px-[2px]'>01</h5>
                   </div>
