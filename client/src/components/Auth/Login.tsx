@@ -28,12 +28,12 @@ const Login:React.FC<Login> = ({func}) => {
     console.log(option);
     const response = await axios.post(url, option)
     setIsLoading(false)
-    if(response.data.statuscode === 200) {
+    if(response.data.success) {
       console.log(response.data);
       
       dispatch(addUser({
         isAuthenticated: true,
-        data: response.data
+        data: response.data.data
       }))
     }
   }

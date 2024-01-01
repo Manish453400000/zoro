@@ -100,7 +100,7 @@ const loginUser = asyncHandler(async (req, res) => {
                     refreshToken,
                 },
                 "User logged in successfully",
-                "ok"
+                true
             )
         );
 });
@@ -223,11 +223,19 @@ const changePassword = asyncHandler(async (req, res) => {
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-    return res
-        .status(200)
-        .json(
-            new ApiResponse(200, req.user, "Current user fetched successfully")
-        );
+    const user = await User.findOne({ _id: req.user._id });
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            {
+                user: user,
+            },
+            "Current user fetched successfully"
+        )
+    );
 });
 
 const updateUser = asyncHandler(async (req, res) => {});

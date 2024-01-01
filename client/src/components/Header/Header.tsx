@@ -1,18 +1,32 @@
 import { useState, useRef, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
 
+import { addUser } from '../../features/user/user.slice'
 //assets
 import logo from '../../assets/logo-zoro.png'
 import logCover from '../../assets/cover/bg-cover.jpg'
 import Login from '../Auth/Login'
 import SignUp from '../Auth/SignUp'
+import profile from '../../assets/default/profile.jpg'
 
 
 function Header() {
   interface User {
     isAuthenticated: boolean,
-    data: {}
+    data: {
+      accessToken: string,
+      reffreshToken: string,
+      user: {
+        username: string,
+        email: string,
+        avatar: string,
+        watchHistory: [],
+        __v: number,
+        _id: string
+      },
+    }
   }
   interface RootState {
     user: User
@@ -23,6 +37,7 @@ function Header() {
   const [showAuthPage, setShowAuthPage] = useState(false)
   const [isNewUser, setIsNewUser] = useState(false)
 
+  const dispatch = useDispatch()
   const user = useSelector((state:RootState) => state.user)
 
 
@@ -32,6 +47,18 @@ function Header() {
 
   const location = useLocation
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const url = '/api/v1/users/get-user'
+    const response = axios.post(url)
+    response.then((res) => {
+      console.log(res.data);
+      dispatch(addUser({
+        isAuthenticated: true,
+        data: res.data.data
+      }))
+    })
+  }, [])
   
   useEffect(() => {
         window.scrollTo(0, 0)
@@ -97,10 +124,20 @@ function Header() {
           </div>
         </div>
 
-        <div className="right-nav flex gap-[10px]">
+        <div className="right-nav flex gap-[10px] items-center">
           <div className="mobile-search-btn flex-center">
             <i className="bx bx-search xl:hidden text-primary text-[22px] cursor-pointer" onClick={() => setShowSearchBox((state) => !state)}></i>
           </div>
+
+          <div className={`${user.isAuthenticated ? '':'hidden' } user-prof text-white flex gap-[10px] justify-center items-center`}>
+            <div className="notification cursor-pointer text-[22px] flex items-center">
+              <i className='bx bxs-bell'></i>
+            </div>
+            <div className="profile cursor-pointer w-[30px] h-[30px] rounded-[50%] overflow-hidden  object-center">
+              <img src={user.data.user.avatar} alt="" className='' />
+            </div>
+          </div>
+
           <div className={`login-btn ${user.isAuthenticated ? 'hidden': ''}`}>
             <button type="button" className="btn bg-spacial" onClick={() => setShowAuthPage((state) => !state)}>Login</button>
           </div>

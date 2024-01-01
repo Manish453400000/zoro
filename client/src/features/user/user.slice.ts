@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import profile from "../../assets/default/profile.jpg"
 
 
 const initialState = {
   user: {
     isAuthenticated: false,
-    data: {}
+    data: {
+      user: {
+        avatar: profile,
+      }
+    }
   }
 }
 
