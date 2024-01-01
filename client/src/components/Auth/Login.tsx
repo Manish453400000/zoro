@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../features/user/user.slice';
 
 interface Login {
   func(newValue:boolean):void
@@ -14,17 +16,25 @@ const Login:React.FC<Login> = ({func}) => {
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  const dispatch = useDispatch()
+
   const Login = async () => {
-    isLoading ? setIsLoading(true) : setIsLoading(false)
-    const url = 'http://localhost:3000/api/v1/users/login'
+    setIsLoading(true)
+    const url = '/api/v1/users/login'
     const option = {
       email,
       password
     }
     console.log(option);
     const response = await axios.post(url, option)
-    if(response.data) {
+    setIsLoading(false)
+    if(response.data.statuscode === 200) {
       console.log(response.data);
+      
+      dispatch(addUser({
+        isAuthenticated: true,
+        data: response.data
+      }))
     }
   }
 

@@ -1,19 +1,29 @@
 import { useState, useRef, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 //assets
 import logo from '../../assets/logo-zoro.png'
 import logCover from '../../assets/cover/bg-cover.jpg'
-import { useLocation, useNavigate } from 'react-router-dom'
 import Login from '../Auth/Login'
 import SignUp from '../Auth/SignUp'
 
 
 function Header() {
+  interface User {
+    isAuthenticated: boolean,
+    data: {}
+  }
+  interface RootState {
+    user: User
+  }
   const [language, setLanguage] = useState('ENG')
   const [showSearchBox, setShowSearchBox] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showAuthPage, setShowAuthPage] = useState(false)
   const [isNewUser, setIsNewUser] = useState(false)
+
+  const user = useSelector((state:RootState) => state.user)
 
 
   const updateParentState = (newValue:boolean) => {
@@ -91,11 +101,11 @@ function Header() {
           <div className="mobile-search-btn flex-center">
             <i className="bx bx-search xl:hidden text-primary text-[22px] cursor-pointer" onClick={() => setShowSearchBox((state) => !state)}></i>
           </div>
-          <div className="login-btn">
+          <div className={`login-btn ${user.isAuthenticated ? 'hidden': ''}`}>
             <button type="button" className="btn bg-spacial" onClick={() => setShowAuthPage((state) => !state)}>Login</button>
           </div>
 
-          <div className={`${showAuthPage ? '':'hidden'} login-comp absolute top-0 left-0 z-[10]`}
+          <div className={`${showAuthPage ? '':'hidden'} ${user.isAuthenticated ? 'hidden': ''} login-comp absolute top-0 left-0 z-[10]`}
           onClick={(e) => {
             if(!authCom.current?.contains(e.target as Node)){
               setShowAuthPage(false)
