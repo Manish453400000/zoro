@@ -248,3 +248,12 @@
 .open-menu{
   transition: height 200ms ease ;
 }
+.invalid{
+  border-bottom: 2px solid red;
+}
+.valid{
+  border-bottom: 2px solid rgb(0, 255, 0);
+}
+.bg-block{
+  background: #7d8f3e;
+}

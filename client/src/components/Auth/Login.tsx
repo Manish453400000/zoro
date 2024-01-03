@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/user/user.slice';
@@ -63,6 +63,20 @@ const Login:React.FC<Login> = ({func, func2}) => {
     })
   }
 
+  const [showPassword, setShowPassword] = useState(false)
+  const passwordRef = useRef<HTMLInputElement>(null)
+
+  const showPasswordHandler = () => {
+    setShowPassword((state) => !state)
+    if(passwordRef.current){
+      if(passwordRef.current.type === 'password') {
+        passwordRef.current.type = "text"
+      }else{
+        passwordRef.current.type = "password"
+      }
+    }
+  }
+
 
   return (
     <>
@@ -104,7 +118,11 @@ const Login:React.FC<Login> = ({func, func2}) => {
 
         <div className="input flex flex-col gpa-[8px] w-full">
           <span className='text-[11px] font-semibold text-[#b4adad]'>PASSWORD</span>
-          <input type="password" placeholder='Password' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[14px]' onChange={(e) => setPassword(e.target.value)} />
+          <div className="input-box flex items-center gap-[10px] w-[100%] rounded-[5px] overflow-hidden bg-white">
+
+          <input name="password" type="password" placeholder='Password' className=' border-none outline-none  py-[6px] px-[10px] text-[14px] w-[90%]' onChange={(e) => setPassword(e.target.value)} ref={passwordRef} value={password} />
+          <i className={`bx ${showPassword ? 'bx-show-alt' : 'bxs-hide'}`} onClick={() => showPasswordHandler()}></i>
+          </div>
           <span className='text-unique text-[11px] cursor-pointer text-right' onClick={() => handleForgotPassword()}>Forget Password?</span>
         </div>
 
