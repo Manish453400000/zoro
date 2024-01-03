@@ -1,10 +1,79 @@
-import React from 'react'
+import React, {useRef, useState} from 'react'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+
+import { addUser } from '../../features/user/user.slice'
 
 interface Login {
   func(newValue:boolean):void
+  func2(newValue:boolean):void
 }
 
-const SignUp:React.FC<Login> = ({func}) => {
+const SignUp:React.FC<Login> = ({func, func2}) => {
+
+
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const passwordRef = useRef<HTMLInputElement>(null)
+  const cPasswordRef = useRef<HTMLInputElement>(null)
+  
+  const showPasswordHandler = () => {
+    console.log('hi');
+    setShowPassword((state) => !state)
+    if(passwordRef.current && cPasswordRef.current){
+      console.log(passwordRef.current.type)
+      if(passwordRef.current.type === 'password') {
+        passwordRef.current.type = "text"
+        cPasswordRef.current.type = "text"
+      }else{
+        passwordRef.current.type = "password"
+        cPasswordRef.current.type = "password"
+      }
+    }
+  }
+
+  // const registerValidator = (username:string, email:string, password:string, conPassword:string) => {
+  //   if(username === '' && email === '' && password === '') {
+  //     return false
+  //   }
+  //   return true
+  // }
+
+  const Register = async () => {
+    setIsLoading(true)
+    const url = '/api/v1/users/register'
+    const option = {
+      username,
+      email,
+      password
+    }
+    console.log(option);
+    axios.post(url, option)
+    .then(response => {
+      setIsLoading(false)
+      console.log(response.data);
+      dispatch(addUser({
+        isAuthenticated: true,
+        data: response.data.data
+      }))
+
+      func2(false)
+    }).catch(error => {
+      setIsLoading(false)
+      console.log(error);
+      
+    })
+  }
+
+
+
   return (
      <div className='flex flex-col items-center '>
       <div className="head text-white text-[22px] font-semibold">Create an Account</div>
@@ -12,26 +81,37 @@ const SignUp:React.FC<Login> = ({func}) => {
 
         <div className="input flex flex-col gpa-[8px] w-full">
           <span className='text-[11px] font-semibold text-[#b4adad]'>USERNAME</span>
-          <input type="email" placeholder='Username' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]' />
+          <input name='username' type="text" placeholder='Username' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]' onChange={(e) => setUsername(e.target.value)} />
         </div>
 
         <div className="input flex flex-col gpa-[8px] w-full">
           <span className='text-[11px] font-semibold text-[#b4adad]'>EMAIL ADDRESS</span>
-          <input type="email" placeholder='name@gmail.com' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]' />
+          <input name='email' type="email" placeholder='name@gmail.com' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]' onChange={(e) => setEmail(e.target.value)} />
         </div>
 
         <div className="input flex flex-col gpa-[8px] w-full">
           <span className='text-[11px] font-semibold text-[#b4adad]'>Password</span>
-          <input type="email" placeholder='Password' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[14px]' />
+          <div className="input-box flex items-center gap-[10px] w-[100%] rounded-[5px] overflow-hidden bg-white">
+
+          <input name="password" type="password" placeholder='Password' className=' border-none outline-none  py-[6px] px-[10px] text-[14px] w-[90%]' onChange={(e) => setPassword(e.target.value)} ref={passwordRef} />
+          <i className={`bx ${showPassword ? 'bx-show-alt' : 'bxs-hide'}`} onClick={() => showPasswordHandler()}></i>
+          </div>
         </div>
 
         <div className="input flex flex-col gpa-[8px] w-full">
           <span className='text-[11px] font-semibold text-[#b4adad]'>Confirm Password</span>
-          <input type="email" placeholder='Confirm Password' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[14px]' />
+          <div className="input-box flex items-center gap-[10px] w-[100%] rounded-[5px] overflow-hidden bg-white">
+
+          <input name='confirmPassword' type="password" placeholder='Confirm Password' className=' border-none outline-none  py-[6px] px-[10px] text-[14px] w-[90%]' onChange={(e) => setConfirmPassword(e.target.value)} ref={cPasswordRef} />
+          <i className={`bx ${showPassword ? 'bx-show-alt' : 'bxs-hide'}`} onClick={() => { showPasswordHandler() }}></i>
+          </div>
         </div>
 
         <div className="button mt-[10px] flex flex-col gap-[10px]">
-          <button className='w-[100%] py-[8px] bg-spacial text-black rounded-[5px]'>Register</button>
+          <button className='w-[100%] py-[8px] bg-spacial text-black rounded-[5px]' onClick={() => Register()}>Register</button>
+          <div className={`loader ${isLoading ? 'flex': 'hidden'} justify-center items-center p-[5px] text-[white]`}>
+            <i className="fa-solid fa-gear loading"></i>
+          </div>
           <span className='text-white m-auto text-[14px]'>already have an account? <span className='text-unique cursor-pointer' onClick={()=> func(false)}>Login</span></span>
         </div>
       </div>

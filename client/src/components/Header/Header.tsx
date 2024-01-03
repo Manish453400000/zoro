@@ -9,6 +9,7 @@ import logo from '../../assets/logo-zoro.png'
 import logCover from '../../assets/cover/bg-cover.jpg'
 import Login from '../Auth/Login'
 import SignUp from '../Auth/SignUp'
+
 import profile from '../../assets/default/profile.jpg'
 
 
@@ -36,6 +37,7 @@ function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showAuthPage, setShowAuthPage] = useState(false)
   const [isNewUser, setIsNewUser] = useState(false)
+  const [showUserMenu, setShowUserMenu] = useState(false)
 
   const dispatch = useDispatch()
   const user = useSelector((state:RootState) => state.user)
@@ -43,6 +45,9 @@ function Header() {
 
   const updateParentState = (newValue:boolean) => {
     setIsNewUser(newValue)
+  };
+  const updateParentState2 = (newValue:boolean) => {
+    setShowAuthPage(newValue)
   };
 
   const location = useLocation
@@ -64,12 +69,14 @@ function Header() {
         window.scrollTo(0, 0)
   }, [location])
 
+
+
   useEffect(()=> {
     if(!showAuthPage){
       setIsNewUser(false)
     }
   }, [showAuthPage, setShowAuthPage])
-
+  
   useEffect(() => {
     if(showAuthPage) {
       document.body.style.overflowY = 'hidden'
@@ -78,17 +85,32 @@ function Header() {
     }
   }, [showAuthPage, setShowAuthPage])
   useEffect(() => {
-
+    
     if(showMobileMenu) {
       document.body.style.overflowY = 'hidden'
     }else {
       document.body.style.overflowY = 'auto'
     }
   }, [showMobileMenu, setShowMobileMenu])
-
+  
   const mobMenu = useRef<HTMLDivElement>(null);
   const authCom = useRef<HTMLDivElement>(null);
-
+  const userMenu = useRef<HTMLDivElement>(null)
+  
+  const Logout = () => {
+    dispatch(addUser({
+        isAuthenticated: false,
+        data: {
+          user: {
+            avatar: profile,
+          }
+        }
+    }))
+    axios.post('/api/v1/users/logout')
+    .then(response => console.log(response.data)
+    ).catch(error => console.error(error))
+    setShowUserMenu(false)
+  }
   
   return (
     <>
@@ -124,19 +146,67 @@ function Header() {
           </div>
         </div>
 
-        <div className="right-nav flex gap-[10px] items-center">
-          <div className="mobile-search-btn flex-center">
-            <i className="bx bx-search xl:hidden text-primary text-[22px] cursor-pointer" onClick={() => setShowSearchBox((state) => !state)}></i>
+        <div className="right-nav flex justify-between  gap-[0px] items-center">
+          <div className="mobile-search-btn flex-center mr-[20px]">
+            <i className="bx bx-search xl:hidden text-primary text-[22px] cursor-pointer" onClick={() => {
+              setShowSearchBox((state) => !state)
+              setShowUserMenu(false)
+              }}></i>
           </div>
 
-          <div className={`${user.isAuthenticated ? '':'hidden' } user-prof text-white flex gap-[10px] justify-center items-center`}>
+          <div className={`${user.isAuthenticated ? '':'hidden' } user-prof relative text-white flex gap-[10px] justify-center items-center`}>
             <div className="notification cursor-pointer text-[22px] flex items-center">
               <i className='bx bxs-bell'></i>
             </div>
-            <div className="profile cursor-pointer w-[30px] h-[30px] rounded-[50%] overflow-hidden  object-center">
-              <img src={user.data.user.avatar} alt="" className='' />
+            <div className="profile cursor-pointer w-[30px] h-[30px] rounded-[50%] overflow-hidden  object-center" onClick={() => setShowUserMenu((state) => !state)}>
+              <img src={user?.data?.user?.avatar} alt="" className='' />
             </div>
+            <div className={` ${showUserMenu ? 'h-[21.5rem]':'h-0 opacity-0'} overflow-hidden open-menu user-menu absolute z-50 top-[130%] right-[10px] bg-[#3a3b41] w-[16rem] py-[12px] px-[18px] rounded-[10px]`} ref={userMenu}>
+              <div className="ditails flex flex-col gap-[1px]">
+                <span className='text-[14px] font-bold text-unique'>{user.data.user.username}</span>
+                <span className='text-[12px]'>{user.data.user.email}</span>
+              </div>
+              <div className="options mt-[10px] flex flex-col gap-[8px]">
+
+               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer">
+                <i className="fa-solid fa-user text-[13px]"></i>
+                <span className='text-[13px]'>Profile</span>
+               </div>
+
+               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer">
+                <i className='bx bx-time-five' ></i>
+                <span className='text-[13px]'>Continue Watching</span>
+               </div>
+
+               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer">
+                <i className='bx bxs-heart'></i>
+                <span className='text-[13px]'>Watch List</span>
+               </div>
+
+               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer">
+                <i className='bx bxs-bell'></i>
+                <span className='text-[13px]'>Notification</span>
+               </div>
+
+               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer">
+                <i className='bx bxs-file-export' ></i>
+                <span className='text-[13px]'>Import/Export</span>
+               </div>
+
+               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer">
+                <i className="fa-solid fa-gear"></i>
+                <span className='text-[13px]'>Setting</span>
+               </div>
+
+               <div className="logout mt-[10px] hover:text-[#daf86f] flex items-center justify-end gap-[6px] cursor-pointer" onClick={() => Logout()}>
+                 <span className='text-[13px]'>Logout</span>
+                 <i className='bx bxs-exit'></i>
+               </div>
+              </div>
+            </div>
+            
           </div>
+
 
           <div className={`login-btn ${user.isAuthenticated ? 'hidden': ''}`}>
             <button type="button" className="btn bg-spacial" onClick={() => setShowAuthPage((state) => !state)}>Login</button>
@@ -164,7 +234,7 @@ function Header() {
                 <div className="secondary-layer w-[100%] h-[100%] absolute bottom-0 rounded-[10px]"></div>
                 <div className="auths w-full h-full  px-[20px] sm:px-[60px] py-[40px] relative z-40">
                   {
-                    isNewUser ? <SignUp func={updateParentState}/> : <Login func={updateParentState}/>
+                    isNewUser ? <SignUp func={updateParentState} func2={updateParentState2}/> : <Login func={updateParentState} func2={updateParentState2}/>
                   }
                 </div>
               </div>

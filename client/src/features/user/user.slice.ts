@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import profile from "../../assets/default/profile.jpg"
 
 
-const initialState = {
+export const initialState = {
   user: {
     isAuthenticated: false,
     data: {
       user: {
+        username: 'guest',
+        email: 'guest@example.com',
         avatar: profile,
       }
     }
