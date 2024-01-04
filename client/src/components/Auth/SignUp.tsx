@@ -3,6 +3,8 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
 import { addUser } from '../../features/user/user.slice'
+import ToastNotification from '../Notification/ToastNotification'
+import { addMessage, removeMessage } from '../../features/notification/notification.slice'
 
 interface Login {
   func(newValue:boolean):void
@@ -70,7 +72,7 @@ const SignUp:React.FC<Login> = ({func, func2}) => {
   }, [password, setPassword])
   
   useEffect(() => {
-    if(confirmPassword === password){
+    if(confirmPassword === password && confirmPassword.length > 5){
       setValidUser(prevState => ({...prevState, confirmPassword: true}))
     }else{
       setValidUser(prevState => ({...prevState, confirmPassword: false}))
@@ -111,6 +113,10 @@ const SignUp:React.FC<Login> = ({func, func2}) => {
       }))
 
       func2(false)
+      dispatch(addMessage({message: "Registration Successfull", type: 'success'}))
+      setTimeout(() => {
+        dispatch(removeMessage())
+      }, 3000)
     }).catch(error => {
       setIsLoading(false)
       console.log(error);
@@ -126,7 +132,7 @@ const SignUp:React.FC<Login> = ({func, func2}) => {
       <div className="form flex flex-col gap-[25px] w-full py-[20px]">
 
         <div className="input flex flex-col gpa-[8px] w-full">
-          <span className='text-[11px] font-semibold text-[#b4adad]'>USERNAME</span>
+          <span className='text-[11px] font-semibold text-[#b4adad]'>USERNAME <span className='text-[10px]'>( minimum 6 charecter )</span></span>
           <input name='username' type="text" placeholder='Username' className={`${validUser.username ? 'valid':'invalid'} border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]`} onChange={(e) => setUsername(e.target.value)} value={username} />
         </div>
 
@@ -136,7 +142,7 @@ const SignUp:React.FC<Login> = ({func, func2}) => {
         </div>
 
         <div className="input flex flex-col gpa-[8px] w-full">
-          <span className='text-[11px] font-semibold text-[#b4adad]'>Password</span>
+          <span className='text-[11px] font-semibold text-[#b4adad]'>Password <span>( minimum 6 charecter )</span></span>
           <div className={`${validUser.password ? 'valid':'invalid'} input-box flex items-center gap-[10px] w-[100%] rounded-[5px] overflow-hidden bg-white`}>
 
           <input name="password" type="password" placeholder='Password' className=' border-none outline-none  py-[6px] px-[10px] text-[14px] w-[90%]' onChange={(e) => setPassword(e.target.value)} ref={passwordRef} value={password} />

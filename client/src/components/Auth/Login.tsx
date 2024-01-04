@@ -1,7 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/user/user.slice';
+import { addMessage, removeMessage } from '../../features/notification/notification.slice';
+
+//costom hooks
 
 interface Login {
   func(newValue:boolean):void
@@ -16,12 +19,26 @@ const Login:React.FC<Login> = ({func, func2}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isEmailVerified, setIsEmailVerified] = useState(false)
+  const [validUser, setValidUser] = useState({
+    email: false,
+    password: false,
+  })
+
 
   const [forgotPasswor, setForgotPassword] = useState(false)
 
   const dispatch = useDispatch()
 
+  const registerValidator = () => {
+    if(validUser.email && validUser.password) {
+      return true
+    }
+    return false
+  }
+
   const Login = async () => {
+    if(!registerValidator()) return;
     setIsLoading(true)
     const url = '/api/v1/users/login'
     const option = {
@@ -41,8 +58,31 @@ const Login:React.FC<Login> = ({func, func2}) => {
       func2(false)
       setEmail('')
       setPassword('')
+
+      dispatch(addMessage({message: 'Login successfull', type: 'success'}))
+      setTimeout(() => {
+        dispatch(removeMessage())
+      }, 3000)
+
     }
   }
+
+  useEffect(() => {
+    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      setValidUser(prevState => ({...prevState, email: true}))
+    }else{
+      setValidUser(prevState => ({...prevState, email: false}))
+    }
+  }, [email, setEmail])
+  
+  useEffect(() => {
+    if(password.length > 5){
+      setValidUser(prevState => ({...prevState, password: true}))
+    }else{
+      setValidUser(prevState => ({...prevState, password: false}))
+    }
+    
+  }, [password, setPassword])
 
   const handleForgotPassword =() => {
     setForgotPassword(true)
@@ -50,13 +90,14 @@ const Login:React.FC<Login> = ({func, func2}) => {
     setPassword('')
   }
 
-  const verifyEmail = () => {
+  const resetPassword = () => {
     const url = '/api/v1/users/change-password'
     const options = {
       email
     }
+    console.log(email) // testing email
     axios.post(url, options)
-    .then(response => {
+    .then(response => { 
       //reset password
     }).catch(error => {
       // throw error
@@ -77,6 +118,13 @@ const Login:React.FC<Login> = ({func, func2}) => {
     }
   }
 
+  useEffect(() => {
+    return () => {
+      setEmail('')
+      setPassword('')
+    }
+  }, [])
+
 
   return (
     <>
@@ -89,12 +137,21 @@ const Login:React.FC<Login> = ({func, func2}) => {
 
         <div className="input flex flex-col gpa-[8px] w-full">
           <span className='text-[11px] font-semibold text-[#b4adad]'>EMAIL ADDRESS</span>
-          <input type="email" placeholder='name@gmail.com' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]' onChange={(e) => setEmail(e.target.value) } />
+          <input type="email" placeholder='name@gmail.com' className={`${validUser.email ? 'valid':'invalid'} border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]`} onChange={(e) => setEmail(e.target.value) } />
+        </div>
+
+        <div className="input flex flex-col gpa-[8px] w-full">
+          <span className='text-[11px] font-semibold text-[#b4adad]'>NEW PASSWORD <span className='text-[10px]'>( minimum 6 charecter)</span></span>
+          <div className={` ${validUser.password ? 'valid':'invalid'} input-box flex items-center gap-[10px] w-[100%] rounded-[5px] overflow-hidden bg-white`}>
+
+          <input name="password" type="password" placeholder='New Password' className=' border-none outline-none  py-[6px] px-[10px] text-[14px] w-[90%]' onChange={(e) => setPassword(e.target.value)} ref={passwordRef} value={password} />
+          <i className={`bx ${showPassword ? 'bx-show-alt' : 'bxs-hide'}`} onClick={() => showPasswordHandler()}></i>
+          </div>
         </div>
 
 
         <div className="button flex flex-col gap-[10px]">
-          <button className='w-[100%] py-[8px] bg-spacial text-black rounded-[5px]' onClick={() => ''}>Verify Email</button>
+          <button className={` ${registerValidator() ? 'bg-spacial':'bg-block'} w-[100%] py-[8px] text-black rounded-[5px] `} onClick={() => ''}>Reset Password</button>
           <div className={`loader ${isLoading ? 'flex': 'hidden'} justify-center items-center p-[5px] text-[white]`}>
             <i className="fa-solid fa-gear loading"></i>
           </div>
@@ -113,12 +170,12 @@ const Login:React.FC<Login> = ({func, func2}) => {
 
         <div className="input flex flex-col gpa-[8px] w-full">
           <span className='text-[11px] font-semibold text-[#b4adad]'>EMAIL ADDRESS</span>
-          <input type="email" placeholder='name@gmail.com' className=' border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]' onChange={(e) => setEmail(e.target.value) } />
+          <input type="email" placeholder='name@gmail.com' className={` ${validUser.email ? 'valid':'invalid'} border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]`} onChange={(e) => setEmail(e.target.value) } />
         </div>
 
         <div className="input flex flex-col gpa-[8px] w-full">
-          <span className='text-[11px] font-semibold text-[#b4adad]'>PASSWORD</span>
-          <div className="input-box flex items-center gap-[10px] w-[100%] rounded-[5px] overflow-hidden bg-white">
+          <span className='text-[11px] font-semibold text-[#b4adad]'>PASSWORD <span className='text-[10px]'>( minimum 6 charecter)</span></span>
+          <div className={` ${validUser.password ? 'valid':'invalid'} input-box flex items-center gap-[10px] w-[100%] rounded-[5px] overflow-hidden bg-white`}>
 
           <input name="password" type="password" placeholder='Password' className=' border-none outline-none  py-[6px] px-[10px] text-[14px] w-[90%]' onChange={(e) => setPassword(e.target.value)} ref={passwordRef} value={password} />
           <i className={`bx ${showPassword ? 'bx-show-alt' : 'bxs-hide'}`} onClick={() => showPasswordHandler()}></i>
@@ -131,7 +188,11 @@ const Login:React.FC<Login> = ({func, func2}) => {
           <div className={`loader ${isLoading ? 'flex': 'hidden'} justify-center items-center p-[5px] text-[white]`}>
             <i className="fa-solid fa-gear loading"></i>
           </div>
-          <span className='text-white m-auto text-[14px]'>Don't have an account? <span className='text-unique cursor-pointer' onClick={() => {func(true)}}>Register</span></span>
+          <span className='text-white m-auto text-[14px]'>Don't have an account? <span className='text-unique cursor-pointer' onClick={() => {
+            func(true)
+            setEmail('')
+            setPassword('')
+          }}>Register</span></span>
         </div>
       </div>
     </div>)

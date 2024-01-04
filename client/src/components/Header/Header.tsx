@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import { addUser } from '../../features/user/user.slice'
+import { addMessage, removeMessage } from '../../features/notification/notification.slice'
 //assets
 import logo from '../../assets/logo-zoro.png'
 import logCover from '../../assets/cover/bg-cover.jpg'
@@ -30,7 +31,9 @@ function Header() {
     }
   }
   interface RootState {
-    user: User
+    userReducer: {
+      user: User
+    }
   }
   const [language, setLanguage] = useState('ENG')
   const [showSearchBox, setShowSearchBox] = useState(false)
@@ -40,7 +43,7 @@ function Header() {
   const [showUserMenu, setShowUserMenu] = useState(false)
 
   const dispatch = useDispatch()
-  const user = useSelector((state:RootState) => state.user)
+  const user = useSelector((state:RootState) => state.userReducer.user)
 
 
   const updateParentState = (newValue:boolean) => {
@@ -107,18 +110,30 @@ function Header() {
         }
     }))
     axios.post('/api/v1/users/logout')
-    .then(response => console.log(response.data)
-    ).catch(error => console.error(error))
+    .then(response => {  
+      if(response.data?.success) {
+        dispatch(addMessage({message: "User Loged out", type: 'pending'}))
+        setTimeout(() => {
+          dispatch(removeMessage())
+        }, 3000)
+      }
+    }).catch(error => console.error(error))
     setShowUserMenu(false)
   }
   
+  // const test = () => {
+  //     dispatch(addMessage({message: "Registration Successfull", type: 'error'}))
+  //     setTimeout(() => {
+  //       dispatch(removeMessage())
+  //     }, 3000)
+  // }
   return (
     <>
     <div className={`bg-primary-header wrapper  top-0 left-0 min-w-[100%] z-50 selection-off pb-[.2rem] pt-[.6rem]`}>
       <header className="w-full max-w-[110rem] m-auto flex justify-between items-center px-[.8rem] pb-[.4rem]">
         <div className="left-nav flex justify-between items-center gap-[5px]">
           <i className='bx bx-menu text-[30px] cursor-pointer text-unique' onClick={() => setShowMobileMenu(true)}></i>
-          <div className="logo px-[7px] cursor-pointer" onClick={() => navigate('/home')}>
+          <div className="logo px-[7px] cursor-pointer" onClick={() => navigate('/')}>
             <img src={logo} alt="logo" className="min-w-[6rem] w-[6rem]" />
           </div>
 
@@ -289,7 +304,7 @@ function Header() {
         <div className="navigation">
           <nav>
             <ul className='nav-links'>
-              <li className='nav-link text-unique-hover' onClick={() => navigate('/home')}>Home</li>
+              <li className='nav-link text-unique-hover' onClick={() => navigate('/')}>Home</li>
               <li className='nav-link text-unique-hover' onClick={() => navigate('/trending')}>Trending</li>
               <li className='nav-link text-unique-hover' onClick={() => navigate('/tv')}>TV Series</li>
               <li className='nav-link text-unique-hover' onClick={() => navigate('/movies')}>Movies</li>

@@ -257,3 +257,22 @@
 .bg-block{
   background: #7d8f3e;
 }
+.toast-timer {
+  animation: timer 3s 1;
+  
+  @keyframes timer {
+    100%{
+      width: 0%;
+    }
+  }
+}
+.message-box{
+  transform: translateX(200%);
+  animation: slide .5s 1 forwards;
+  @keyframes slide {
+    100%{
+      transform: translateX(0%);
+    }
+  }
+  
+}

@@ -1,6 +1,7 @@
 import Carousel from "../components/Carousel/Carousel"
 import ContentWraper from "../components/ContentWraper"
 import Genres from "../components/Genres/Genres"
+import ToastNotification from "../components/Notification/ToastNotification"
 import ListData from "../components/Other/ListData"
 import MostViewed from "../components/Other/MostViewed"
 import UpdatedBox from "../components/Other/UpdatedBox"
@@ -32,6 +33,7 @@ function HomePage() {
         </ContentWraper>
         
       </div>
+      <ToastNotification />
     </div>
   )
 }
