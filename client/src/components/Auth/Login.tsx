@@ -30,7 +30,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
 
   const dispatch = useDispatch()
 
-  const registerValidator = () => {
+  const LoginValidator = () => {
     if(validUser.email && validUser.password) {
       return true
     }
@@ -38,7 +38,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
   }
 
   const Login = async () => {
-    if(!registerValidator()) return;
+    if(!LoginValidator()) return;
     setIsLoading(true)
     const url = '/api/v1/users/login'
     const option = {
@@ -151,7 +151,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
 
 
         <div className="button flex flex-col gap-[10px]">
-          <button className={` ${registerValidator() ? 'bg-spacial':'bg-block'} w-[100%] py-[8px] text-black rounded-[5px] `} onClick={() => ''}>Reset Password</button>
+          <button className={` ${LoginValidator() ? 'manish9062':'bg-block'} w-[100%] py-[8px] text-black rounded-[5px] `} onClick={() => ''}>Reset Password</button>
           <div className={`loader ${isLoading ? 'flex': 'hidden'} justify-center items-center p-[5px] text-[white]`}>
             <i className="fa-solid fa-gear loading"></i>
           </div>
@@ -184,7 +184,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
         </div>
 
         <div className="button flex flex-col gap-[10px]">
-          <button className='w-[100%] py-[8px] bg-spacial text-black rounded-[5px]' onClick={() => Login()}>Login</button>
+          <button className={` ${LoginValidator() ? 'bg-spacial':'bg-block'} w-[100%] py-[8px] text-black rounded-[5px]`} onClick={() => Login()}>Login</button>
           <div className={`loader ${isLoading ? 'flex': 'hidden'} justify-center items-center p-[5px] text-[white]`}>
             <i className="fa-solid fa-gear loading"></i>
           </div>
