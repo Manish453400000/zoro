@@ -183,7 +183,7 @@ function Header() {
               </div>
               <div className="options mt-[10px] flex flex-col gap-[8px]">
 
-               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer">
+               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer" onClick={() => navigate('/user')}>
                 <i className="fa-solid fa-user text-[13px]"></i>
                 <span className='text-[13px]'>Profile</span>
                </div>
