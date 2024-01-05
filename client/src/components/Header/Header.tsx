@@ -284,7 +284,7 @@ function Header() {
       }
     }} >
 
-      <div className={`${showMobileMenu ? 'translate-x-[0px]':'-translate-x-full'} mob-menu slidin left-0 absolute top-0 glass-bg flex flex-col min-h-[100vh] min-w-[16rem] text-white overflow-auto`} ref={mobMenu} >
+      <div className={`${showMobileMenu ? 'translate-x-[0px]':'-translate-x-full'} mob-menu slidin left-0 absolute z-[777] top-0 glass-bg flex flex-col min-h-[100vh] min-w-[16rem] text-white overflow-auto`} ref={mobMenu} >
 
         <div className="close-menu flex-center max-w-[9rem] gap-[2px] px-[2px] py-[4px] mx-[14px] my-[10px] md:my-[15px] lg:my-[20px] cursor-pointer glass-bg-dark bg-secondary-light rounded-[20px]" onClick={() => setShowMobileMenu(false)}>
           <i className='bx bx-chevron-left text-[20px]'></i>

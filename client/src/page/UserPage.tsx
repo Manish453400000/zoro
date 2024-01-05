@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 
 import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import ToastNotification from '../components/ToastNotification/ToastNotification'
 // import { useEffect, useState } from 'react'
 
 interface User {
@@ -27,13 +29,17 @@ interface User {
   }
 
 const UserPage = () => {
-
-  
-
+  const user = useSelector((state:RootState) => state.userReducer.user)
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if(!user.isAuthenticated) {
+      navigate('/')
+    }
+  }, [user])
 
-  const user = useSelector((state:RootState) => state.userReducer.user)
+
+
 
   return (
     <div className=' min-h-[50rem] bg-primary-deep '>
@@ -43,9 +49,9 @@ const UserPage = () => {
           <div className="glass-temperd"></div>
         </div>
         <ContentWraper>
-          <div className="content-profile relative z-[99] flex flex-col justify-center items-center py-[10px] sm:pt-[10px]">
+          <div className="content-profile relative z-[9] flex flex-col justify-center items-center py-[10px] sm:pt-[10px]">
             <h4 className='text-white hidden sm:block md:text-[32px] text-[24px] font-bold'>Hi, {user.data.user.username}</h4>
-            <div className="mobile-menu-btn sm:hidden flex items-center gap-[30px] text-[white] mt-[15px]">
+            <div className="mobile-menu-btn sm:hidden flex items-center gap-[12px] text-[white] mt-[15px]">
               <i className={`${location.pathname === '/user/profile' ? 'active-menu-btn':''} fa-solid fa-user text-[18px] px-[10px] py-[5px] cursor-pointer`} onClick={() => navigate('/user/profile')}></i>
               <i className={`${location.pathname === '/user/continue-watching' ? 'active-menu-btn':''} bx bx-time-five text-[24px] px-[10px] py-[5px] cursor-pointer`} onClick={() => navigate('/user/continue-watching')} ></i>
               <i className={`${location.pathname === '/user/watch-list' ? 'active-menu-btn':''} bx bxs-heart text-[24px] px-[10px] py-[5px] cursor-pointer`} onClick={() => navigate('/user/watch-list')}></i>
@@ -86,6 +92,7 @@ const UserPage = () => {
         </ContentWraper>
       </div>
       <Outlet />
+      <ToastNotification />
     </div>
   )
 }

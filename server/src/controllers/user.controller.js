@@ -222,7 +222,13 @@ const editAvatar = asyncHandler(async (req, res) => {
     // send updated user data to frontend
     return res
         .status(200)
-        .json(new ApiResponse(200, updatedUser, "Avatar successfully updated"));
+        .json(
+            new ApiResponse(
+                200,
+                { user: updatedUser },
+                "Avatar successfully updated"
+            )
+        );
 });
 
 const changePassword = asyncHandler(async (req, res) => {
