@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+
 import Message from './Message'
-import { useDispatch, useSelector } from 'react-redux'
-import { addMessage } from '../../features/notification/notification.slice';
+import { useSelector } from 'react-redux'
+
 
 interface Notification {
   id: string;
@@ -19,7 +19,6 @@ interface RootState {
 const ToastNotification = () => {
 
   const messages = useSelector((state:RootState) => state.messageReducer.messages)
-  const dispatch = useDispatch()
 
 
   return (
