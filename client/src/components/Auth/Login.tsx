@@ -55,6 +55,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
         isAuthenticated: true,
         data: response.data.data
       }))
+      localStorage.setItem('accessToken', response.data.data.accessToken)
       func2(false)
       setEmail('')
       setPassword('')

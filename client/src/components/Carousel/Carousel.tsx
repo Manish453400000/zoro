@@ -10,7 +10,6 @@ function Carousel() {
   const navigation = (dir:string) => {
     if(carousel.current) {
       const container = carousel.current;
-      console.log(container.scrollLeft, container.offsetWidth);
       
       const scrollAmount = dir === "left" ? container.scrollLeft - (container.offsetWidth) : container.scrollLeft + (container.offsetWidth);
       

@@ -39,6 +39,8 @@ const Profile: React.FC = () => {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
 
+  const [username, setUserName] = useState('')
+
   const [showChangePassword, setShowChangePassword] = useState(false)
 
   const dispatch = useDispatch()
@@ -152,17 +154,17 @@ const Profile: React.FC = () => {
 
               <div className="input-field flex flex-col">
                 <span className='text-[13px] text-[#dbd6d6]'>EMAIL ADDRESS</span>
-                <input type="email" disabled value={user.data.user.email} className=' px-[10px] py-[8px] rounded-[5px] bg-[#e4e9ff] text-black outline-none border-none' />
+                <input type="email" disabled defaultValue={user.data.user.email} className=' px-[10px] py-[8px] rounded-[5px] bg-[#e4e9ff] text-black outline-none border-none' />
               </div>
 
               <div className="input-field flex flex-col">
                 <span className='text-[13px] text-[#dbd6d6]'>USERNAME</span>
-                <input type="email" value={user.data.user.username} className=' px-[10px] py-[8px] rounded-[5px] bg-[#ffffff] text-black outline-none border-none' />
+                <input type="email" value={user.data.user.username} className=' px-[10px] py-[8px] rounded-[5px] bg-[#ffffff] text-black outline-none border-none' onChange={(e) => setUserName(e.target.value)} />
               </div>
 
               <div className="input-field flex flex-col">
                 <span className='text-[13px] text-[#dbd6d6]'>JOINED</span>
-                <input type="email" disabled value={user.data.user.createdAt} className=' px-[10px] py-[8px] rounded-[5px] bg-[#e4e9ff] text-black outline-none border-none' />
+                <input type="email" disabled defaultValue={user.data.user.createdAt} className=' px-[10px] py-[8px] rounded-[5px] bg-[#e4e9ff] text-black outline-none border-none' />
               </div>
 
               <div className="forget-password flex items-center gap-[5px] text-[#dbd6d6] cursor-pointer mt-[15px]">
@@ -173,12 +175,12 @@ const Profile: React.FC = () => {
               <div className={`${showChangePassword ? 'flex':'hidden'} password-change  flex-col gap-[10px]`}>
                 <div className="input-field flex flex-col">
                   <span className='text-[13px] text-[#dbd6d6]'>OLD PASSWORD</span>
-                  <input type="password" value={oldPassword} className=' px-[10px] py-[8px] rounded-[5px] bg-[#ffffff] text-black outline-none border-none' onChange={(e) => setOldPassword(e.target.value)} />
+                  <input type="password" value={oldPassword} placeholder='Old Password' className=' px-[10px] py-[8px] rounded-[5px] bg-[#ffffff] text-black outline-none border-none' onChange={(e) => setOldPassword(e.target.value)} />
                 </div>
 
                 <div className="input-field flex flex-col">
                   <span className='text-[13px] text-[#dbd6d6]'>NEW PASSWORD</span>
-                  <input type="password" value={newPassword} className=' px-[10px] py-[8px] rounded-[5px] bg-[#ffffff] text-black outline-none border-none' onChange={(e) => setNewPassword(e.target.value)} />
+                  <input type="password" value={newPassword} placeholder='New Password' className=' px-[10px] py-[8px] rounded-[5px] bg-[#ffffff] text-black outline-none border-none' onChange={(e) => setNewPassword(e.target.value)} />
                 </div>
               </div>
 

@@ -64,7 +64,10 @@ function Header() {
 
   useEffect(() => {
     const url = '/api/v1/users/get-user'
-    const response = axios.post(url)
+    const accessToken = localStorage.getItem('accessToken')
+    const response = axios.post(url, {
+      headers: { 'Authorization': `Bearer ${accessToken}`, }
+    })
     response.then((res) => {
       console.log(res.data);
       dispatch(addUser({
@@ -138,7 +141,7 @@ function Header() {
     <div className={`bg-primary-header wrapper  top-0 left-0 min-w-[100%] z-50 selection-off pb-[.2rem] pt-[.6rem]`}>
       <header className="w-full max-w-[110rem] m-auto flex justify-between items-center px-[.8rem] pb-[.4rem]">
         <div className="left-nav flex justify-between items-center gap-[5px]">
-          <i className='bx bx-menu text-[30px] cursor-pointer text-unique' onClick={() => setShowMobileMenu(true)}></i>
+          <i className='bx bx-menu text-[30px] cursor-pointer text-unique' onClick={() => { setShowUserMenu(false); setShowMobileMenu(true); }}></i>
           <div className="logo px-[7px] cursor-pointer" onClick={() => navigate('/')}>
             <img src={logo} alt="logo" className="min-w-[6rem] w-[6rem]" />
           </div>
