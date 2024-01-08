@@ -70,10 +70,12 @@ function Header() {
     })
     response.then((res) => {
       console.log(res.data);
-      dispatch(addUser({
+      if(res.data.data.user){
+        dispatch(addUser({
         isAuthenticated: true,
         data: res.data.data
       }))
+      }
     })
   }, [])
   
