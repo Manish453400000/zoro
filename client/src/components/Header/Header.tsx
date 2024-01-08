@@ -171,7 +171,7 @@ function Header() {
         </div>
 
         <div className="right-nav flex justify-between  gap-[0px] items-center">
-          <div className="mobile-search-btn flex-center mr-[20px]">
+          <div className="mobile-search-btn flex-center mr-[15px] ">
             <i className="bx bx-search xl:hidden text-primary text-[22px] cursor-pointer" onClick={() => {
               setShowSearchBox((state) => !state)
               setShowUserMenu(false)
@@ -182,13 +182,13 @@ function Header() {
             <div className="notification cursor-pointer text-[22px] flex items-center">
               <i className='bx bxs-bell'></i>
             </div>
-            <div className="profile-logo cursor-pointer w-[30px] h-[30px] rounded-[50%] overflow-hidden  object-center" onClick={() => setShowUserMenu((state) => !state)}>
-              <img src={user?.data?.user?.avatar} alt="" className='' />
+            <div className="profile-logo cursor-pointer w-[30px] h-[30px] rounded-[50%] overflow-hidden" onClick={() => setShowUserMenu((state) => !state)}>
+              <img src={user?.data?.user?.avatar} alt="" className=' object-cover w-full h-full object-center' />
             </div>
             <div className={` ${showUserMenu ? 'h-[21.5rem]':'h-0 opacity-0 hidden'} overflow-hidden open-menu user-menu absolute z-[999] top-[130%] right-[10px] bg-[#3a3b41] w-[16rem] py-[12px] px-[18px] rounded-[10px]`} ref={userMenu}>
               <div className="ditails flex flex-col gap-[1px]">
                 <span className='text-[14px] font-bold text-unique'>{user.data.user.username}</span>
-                <span className='text-[12px]'>{user.data.user.email}</span>
+                <span className='text-[12px]'>{user.data?.user?.email || 'google@gmail.com'}</span>
               </div>
               <div className="options mt-[10px] flex flex-col gap-[8px]">
 

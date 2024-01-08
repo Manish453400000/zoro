@@ -14,10 +14,6 @@
 //header 
 .glass-bg {
   background: #2a2c31;
-  @media only screen and (min-width: 768px) {
-    background-color: rgba(112, 112, 112, 0.192);
-    backdrop-filter: blur(5px);
-  }
 }
 .glass-bg-dark {
   background: #191a1d;

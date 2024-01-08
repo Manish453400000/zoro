@@ -10,6 +10,7 @@ import WatchList from "./components/userProfile/WacthList/WatchList"
 import Notification from "./components/userProfile/Notification/Notification"
 import Setting from "./components/userProfile/Setting/Setting"
 import ImportExport from "./components/userProfile/ImporExport/ImportExport"
+import NotFoundPage from "./page/NotFoundPage"
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/user/setting" element={<Setting />} />
           <Route path="/user/import" element={<ImportExport />} />
         </Route>
+        <Route path="/*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

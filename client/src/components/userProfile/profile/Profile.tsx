@@ -39,7 +39,7 @@ const Profile: React.FC = () => {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
 
-  const [username, setUserName] = useState('')
+  const [username, setUserName] = useState(user.data.user.username)
 
   const [showChangePassword, setShowChangePassword] = useState(false)
 
@@ -159,7 +159,7 @@ const Profile: React.FC = () => {
 
               <div className="input-field flex flex-col">
                 <span className='text-[13px] text-[#dbd6d6]'>USERNAME</span>
-                <input type="email" value={user.data.user.username} className=' px-[10px] py-[8px] rounded-[5px] bg-[#ffffff] text-black outline-none border-none' onChange={(e) => setUserName(e.target.value)} />
+                <input type="email" value={username} className=' px-[10px] py-[8px] rounded-[5px] bg-[#ffffff] text-black outline-none border-none' onChange={(e) => setUserName(e.target.value)} />
               </div>
 
               <div className="input-field flex flex-col">

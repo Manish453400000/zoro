@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
 import { addUser } from '../../features/user/user.slice'
-import ToastNotification from '../Notification/ToastNotification'
+// import ToastNotification from '../Notification/ToastNotification'
 import { addMessage, removeMessage } from '../../features/notification/notification.slice'
 
 interface Login {

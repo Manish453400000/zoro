@@ -1,5 +1,5 @@
 import ContentWraper from '../components/ContentWraper'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 
 import { useSelector } from 'react-redux'
@@ -45,12 +45,12 @@ const UserPage = () => {
     <div className=' min-h-[50rem] bg-primary-deep '>
       <div className="user-head h-[5rem] sm:h-[11rem]  relative">
         <div className="background-banner absolute w-[100%] overflow-hidden cover-profile">
-          <img src={user.data.user.avatar} alt="" className='' />
+          <img src={user.data?.user?.avatar} alt="" className='' />
           <div className="glass-temperd"></div>
         </div>
         <ContentWraper>
           <div className="content-profile relative z-[9] flex flex-col justify-center items-center py-[10px] sm:pt-[10px]">
-            <h4 className='text-white hidden sm:block md:text-[32px] text-[24px] font-bold'>Hi, {user.data.user.username}</h4>
+            <h4 className='text-white hidden sm:block md:text-[32px] text-[24px] font-bold'>Hi, {user.data?.user?.username || 'Guest'}</h4>
             <div className="mobile-menu-btn sm:hidden flex items-center gap-[12px] text-[white] mt-[15px]">
               <i className={`${location.pathname === '/user/profile' ? 'active-menu-btn':''} fa-solid fa-user text-[18px] px-[10px] py-[5px] cursor-pointer`} onClick={() => navigate('/user/profile')}></i>
               <i className={`${location.pathname === '/user/continue-watching' ? 'active-menu-btn':''} bx bx-time-five text-[24px] px-[10px] py-[5px] cursor-pointer`} onClick={() => navigate('/user/continue-watching')} ></i>

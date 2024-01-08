@@ -19,7 +19,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [isEmailVerified, setIsEmailVerified] = useState(false)
+  // const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [validUser, setValidUser] = useState({
     email: false,
     password: false,
@@ -91,19 +91,19 @@ const Login:React.FC<Login> = ({func, func2}) => {
     setPassword('')
   }
 
-  const resetPassword = () => {
-    const url = '/api/v1/users/change-password'
-    const options = {
-      email
-    }
-    console.log(email) // testing email
-    axios.post(url, options)
-    .then(response => { 
-      //reset password
-    }).catch(error => {
-      // throw error
-    })
-  }
+  // const resetPassword = () => {
+  //   const url = '/api/v1/users/change-password'
+  //   const options = {
+  //     email
+  //   }
+  //   console.log(email) // testing email
+  //   axios.post(url, options)
+  //   .then(response => { 
+  //     //reset password
+  //   }).catch(error => {
+  //     // throw error
+  //   })
+  // }
 
   const [showPassword, setShowPassword] = useState(false)
   const passwordRef = useRef<HTMLInputElement>(null)

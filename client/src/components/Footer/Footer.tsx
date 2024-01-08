@@ -14,7 +14,7 @@ const Footer = () => {
               <div className="left-layer w-[50%] h-full absolute top-0 left-0"></div>
               <div className="right-layer w-[50%] h-full absolute top-0 right-0"></div>
             </div>
-            <div className="content flex flex-col gap-[15px] justify-center items-center py-[1rem] relative z-10 ">
+            <div className="content flex flex-col gap-[15px] justify-center items-center py-[1rem] relative z-[5] ">
               <div className="logo border-bottom pb-[20px]">
                 <img src={logo} alt="" className='w-[8rem]' />
               </div>
