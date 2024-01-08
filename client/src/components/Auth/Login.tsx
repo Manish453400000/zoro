@@ -133,7 +133,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
       forgotPasswor ? 
       (<div>
       <div className='flex flex-col items-center '>
-      <div className="head text-white text-[22px] font-semibold">Forget Password</div>
+      <div className="head text-white text-[22px] font-semibold">Change Password</div>
       <div className="form flex flex-col gap-[25px] w-full py-[20px]">
 
         <div className="input flex flex-col gpa-[8px] w-full">
@@ -152,7 +152,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
 
 
         <div className="button flex flex-col gap-[10px]">
-          <button className={` ${LoginValidator() ? 'manish9062':'bg-block'} w-[100%] py-[8px] text-black rounded-[5px] `} onClick={() => ''}>Reset Password</button>
+          <button className={` ${LoginValidator() ? 'bg-spacial':'bg-block'} w-[100%] py-[8px] text-black rounded-[5px] `} onClick={() => ''}>Reset Password</button>
           <div className={`loader ${isLoading ? 'flex': 'hidden'} justify-center items-center p-[5px] text-[white]`}>
             <i className="fa-solid fa-gear loading"></i>
           </div>

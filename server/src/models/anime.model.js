@@ -28,14 +28,18 @@ const episodeSchema = new mongoose.Schema({
 const animeSchema = new mongoose.Schema(
     {
         name: {
-            type: string,
+            type: String,
             required: [true, "anime name is required"],
         },
         description: {
-            type: string,
+            type: String,
             required: [true, "anime description is required"],
         },
-        thumbnail: String, //cloudinary url
+        thumbnail: {
+            type: String,
+            default:
+                "http://res.cloudinary.com/dwl9iesij/image/upload/v1704559882/w59naybq3jlw7jd3djyp.jpg",
+        }, //cloudinary url
         episodes: [episodeSchema],
         type: String,
         aired: String,

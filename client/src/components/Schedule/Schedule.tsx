@@ -101,7 +101,7 @@ const Schedule = () => {
                 <span className='font-bold'>Stardust Telepath</span>
               </div>
               <div className="right">
-                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px]">
+                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px] cursor-pointer">
                   <i className='bx bx-play-circle'></i>
                   <span className=''>Watch Now</span>
                 </div>
@@ -114,7 +114,7 @@ const Schedule = () => {
                 <span className='font-bold'>Stardust Telepath</span>
               </div>
               <div className="right">
-                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px]">
+                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px] cursor-pointer">
                   <i className='bx bx-play-circle'></i>
                   <span className=''>Watch Now</span>
                 </div>
@@ -127,7 +127,7 @@ const Schedule = () => {
                 <span className='font-bold'>Stardust Telepath</span>
               </div>
               <div className="right">
-                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px]">
+                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px] cursor-pointer">
                   <i className='bx bx-play-circle'></i>
                   <span className=''>Watch Now</span>
                 </div>
@@ -140,7 +140,7 @@ const Schedule = () => {
                 <span className='font-bold'>Stardust Telepath</span>
               </div>
               <div className="right">
-                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px]">
+                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px] cursor-pointer">
                   <i className='bx bx-play-circle'></i>
                   <span className=''>Watch Now</span>
                 </div>
@@ -153,7 +153,7 @@ const Schedule = () => {
                 <span className='font-bold'>Stardust Telepath</span>
               </div>
               <div className="right">
-                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px]">
+                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px] cursor-pointer">
                   <i className='bx bx-play-circle'></i>
                   <span className=''>Watch Now</span>
                 </div>
@@ -166,7 +166,7 @@ const Schedule = () => {
                 <span className='font-bold'>Stardust Telepath</span>
               </div>
               <div className="right">
-                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px]">
+                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px] cursor-pointer">
                   <i className='bx bx-play-circle'></i>
                   <span className=''>Watch Now</span>
                 </div>
@@ -179,7 +179,7 @@ const Schedule = () => {
                 <span className='font-bold'>Stardust Telepath</span>
               </div>
               <div className="right">
-                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px]">
+                <div className="ep-btn text-[12px] py-[5px] px-[15px] bg-secondary rounded-[5px] flex items-center gap-[5px] cursor-pointer">
                   <i className='bx bx-play-circle'></i>
                   <span className=''>Watch Now</span>
                 </div>
