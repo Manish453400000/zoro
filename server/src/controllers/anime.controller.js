@@ -9,4 +9,14 @@ const saveAnime = asyncHandler(async (req, res) => {
     res.status(201).json(anime);
 });
 
-export { saveAnime };
+const getAllAnime = asyncHandler(async (req, res) => {
+    const animes = await Anime.find({ type: "TV" });
+    if (!animes) {
+        throw new ApiError(500, "Something went wrong getting anime data");
+    }
+    res.status(200).json({
+        animes: animes,
+    });
+});
+
+export { saveAnime, getAllAnime };

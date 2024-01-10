@@ -138,6 +138,25 @@ function Header() {
   //       dispatch(removeMessage())
   //     }, 3000)
   // }
+
+  const [searchKey, setSearchKey] = useState('');
+  useEffect(() => {
+    console.log('test..1')
+    
+    const url = '/api/v1/animes/get-animes'
+    const timeoutId = setTimeout(() => {
+      if(!(searchKey === '')) {
+        console.log('test 2...')
+        
+        axios.get(url)
+        .then(res => console.log(res.data))
+        .catch(err => console.error(err))
+      }
+    },300)
+
+    return () => clearTimeout(timeoutId)
+  }, [searchKey, setSearchKey])
+
   return (
     <>
     <div className={`bg-primary-header wrapper  top-0 left-0 min-w-[100%] z-50 selection-off pb-[.2rem] pt-[.6rem]`}>
@@ -276,7 +295,7 @@ function Header() {
           <i className='bx bxs-filter-alt text-[18px] text-white'></i>
         </div>
         <div className="rounded-[5px] overflow-hidden bg-white xl:hidden flex flex-1 justify-between items-center px-[1rem]">
-              <input type="text" name='searchBox' className=" py-[.4rem] w-[80%] text-[15px] md:text-[16px] outline-none border-none" placeholder="Search for Anime..." /> 
+              <input type="text" autoComplete='false' name='searchBox' className=" py-[.4rem] w-[80%] text-[15px] md:text-[16px] outline-none border-none" placeholder="Search for Anime..." onChange={(e) => setSearchKey(e.target.value)} /> 
               <div className="buttons flex-center text-black">
                 <i className="bx bx-search text-black text-[20px] cursor-pointer"></i>
               </div> 
@@ -315,13 +334,13 @@ function Header() {
         <div className="navigation">
           <nav>
             <ul className='nav-links'>
-              <li className='nav-link text-unique-hover' onClick={() => navigate('/')}>Home</li>
-              <li className='nav-link text-unique-hover' onClick={() => navigate('/trending')}>Trending</li>
-              <li className='nav-link text-unique-hover' onClick={() => navigate('/tv')}>TV Series</li>
-              <li className='nav-link text-unique-hover' onClick={() => navigate('/movies')}>Movies</li>
-              <li className='nav-link text-unique-hover' onClick={() => navigate('/ovas')}>OVAs</li>
-              <li className='nav-link text-unique-hover' onClick={() => navigate('/onas')}>ONAs</li>
-              <li className='nav-link text-unique-hover' onClick={() => navigate('/spacial')}>Specials</li>
+              <li className='nav-link text-unique-hover' onClick={() => {navigate('/'); setShowMobileMenu(false)}}>Home</li>
+              <li className='nav-link text-unique-hover' onClick={() => {navigate('/trending'); setShowMobileMenu(false)}}>Trending</li>
+              <li className='nav-link text-unique-hover' onClick={() => {navigate('/tv'); setShowMobileMenu(false)}}>TV Series</li>
+              <li className='nav-link text-unique-hover' onClick={() => {navigate('/movies'); setShowMobileMenu(false)}}>Movies</li>
+              <li className='nav-link text-unique-hover' onClick={() => {navigate('/ovas'); setShowMobileMenu(false)}}>OVAs</li>
+              <li className='nav-link text-unique-hover' onClick={() => {navigate('/onas'); setShowMobileMenu(false)}}>ONAs</li>
+              <li className='nav-link text-unique-hover' onClick={() => {navigate('/spacial'); setShowMobileMenu(false)}}>Specials</li>
             </ul>
           </nav>
         </div>

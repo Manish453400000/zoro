@@ -47,6 +47,7 @@ const animeSchema = new mongoose.Schema(
         genres: [String],
         country: String,
         studio: String,
+        keywords: [String],
     },
     { timestamps: true }
 );

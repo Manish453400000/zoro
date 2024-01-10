@@ -107,10 +107,13 @@ const SignUp:React.FC<Login> = ({func, func2}) => {
     .then(response => {
       setIsLoading(false)
       console.log(response.data);
-      dispatch(addUser({
-        isAuthenticated: true,
-        data: response.data.data
-      }))
+      if(response.data.data){
+
+        dispatch(addUser({
+          isAuthenticated: true,
+          data: response.data.data
+        }))
+      }
 
       func2(false)
       dispatch(addMessage({message: "Registration Successfull", type: 'success'}))
