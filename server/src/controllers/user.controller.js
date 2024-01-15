@@ -267,6 +267,23 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {});
 
+const createAdmin = asyncHandler(async (req, res) => {
+    // get the admin data
+    // cheack admin key
+    // verify authenticity of the admin
+    // cheack if this admin is already exists
+    // generate tokens for admin
+    // save the admin in database
+    // send the admin data.
+
+    const { username, email, password, admin_key } = req.body;
+    const key = process.env.ADMIN_KEY;
+    if (admin_key === key) {
+        throw new ApiError(400, "Invalid admin key");
+    }
+});
+const loginAdmin = asyncHandler(async (req, res) => {});
+
 export {
     createUser,
     loginUser,
@@ -275,4 +292,6 @@ export {
     getCurrentUser,
     changePassword,
     refreshAcccessToken,
+    createAdmin,
+    loginAdmin,
 };

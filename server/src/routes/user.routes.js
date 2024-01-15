@@ -7,6 +7,8 @@ import {
     refreshAcccessToken,
     changePassword,
     getCurrentUser,
+    createAdmin,
+    loginAdmin,
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJwt } from "../middlewares/auth.middleware.js";
@@ -27,5 +29,9 @@ userRouter.route("/edit/avatar").post(
     verifyJwt,
     editAvatar
 );
+
+//admin only
+userRouter.route("/admin/register", createAdmin);
+userRouter.route("/admin/login", loginAdmin);
 
 export { userRouter };
