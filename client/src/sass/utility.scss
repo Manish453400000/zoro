@@ -10,11 +10,12 @@
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 
-  scrollbar-width: auto;
-  scrollbar-color: #4a4b51 #191a1d;
+  scrollbar-width: 3px;
+  // scrollbar-color: #718039 #191a1d;
 }
 *::-webkit-scrollbar{
   max-width: 3px;
+  width: 3px;
 }
 
 *::-webkit-scrollbar-track{
@@ -48,7 +49,7 @@ body {
   background: #2a2c31;
 
   @media only screen and (min-width: 1280px) {
-      background: #2a2c317e;
+      background: #00000053;
     }
 }
 

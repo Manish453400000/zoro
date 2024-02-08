@@ -136,13 +136,10 @@ function Header() {
 
   const [searchKey, setSearchKey] = useState('');
   useEffect(() => {
-    console.log('test..1')
     
     const url = '/api/v1/animes/get-animes'
     const timeoutId = setTimeout(() => {
       if(!(searchKey === '')) {
-        console.log('test 2...')
-        
         axios.get(url)
         .then(res => console.log(res.data))
         .catch(err => console.error(err))
@@ -164,7 +161,7 @@ function Header() {
 
           {/* ........................................SearchBox................................ */}
             <div className="w-[19rem] 2xl:w-[27rem] rounded-[5px] bg-white hidden xl:flex xl:justify-between xl:items-center mx-[5px]">
-              <input type="text" name='' className="pl-[1rem] py-[.4rem] flex-1 outline-none border-none rounded-[5px]" value={searchInput} placeholder="Search for Anime..." onChange={(e) => setSearchInput(e.target.value)} /> 
+              <input type="search" name='search' className="pl-[1rem] py-[.4rem] flex-1 outline-none border-none rounded-[5px]" autoComplete='off' value={searchInput} placeholder="Search for Anime..." onChange={(e) => setSearchInput(e.target.value)} /> 
 
               <div className="buttons flex-center gap-2 px-2">
                 <i className="bx bx-search text-black text-[20px] cursor-pointer"></i>

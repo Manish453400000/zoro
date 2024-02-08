@@ -21,10 +21,7 @@ app.use(cookieParser());
 
 // routes
 import { userRouter } from "./routes/user.routes.js";
-import { animeRouter } from "./routes/anime.routes.js";
-// import { }
 
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/animes", animeRouter);
 
 export { app };

@@ -1,57 +1,95 @@
-import mongoose from "mongoose";
-import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
+import mongoose, { Schema } from "mongoose";
 
-const episodeSchema = new mongoose.Schema({
-    number: {
-        type: Number,
-        required: true,
-    },
-    url: {
-        sub: {
-            type: String, //cloudinary url
-            required: true,
-        },
-        dub: {
-            type: String, //cloudinary url
-        },
-    },
-    duration: {
-        type: String, //cloudinary duration
-        required: true,
-    },
-    intro: {
-        start: String,
-        end: String,
-    },
-});
-
-const animeSchema = new mongoose.Schema(
+const animeSchema = new Schema(
     {
         name: {
             type: String,
-            required: [true, "anime name is required"],
+            required: true,
         },
         description: {
             type: String,
-            required: [true, "anime description is required"],
+            required: true,
         },
         thumbnail: {
+            type: String, // cloudnery url
+            required: true,
+        },
+        airIn: {
             type: String,
-            default:
-                "http://res.cloudinary.com/dwl9iesij/image/upload/v1704559882/w59naybq3jlw7jd3djyp.jpg",
-        }, //cloudinary url
-        episodes: [episodeSchema],
-        type: String,
-        aired: String,
-        status: String,
-        genres: [String],
-        country: String,
-        studio: String,
-        keywords: [String],
+            enum: ["TV", "WEB"],
+            default: "TV",
+        },
+        country: {
+            type: String,
+            required: true,
+        },
+        dateAired: {
+            type: String,
+            required: true,
+        },
+        scores: {
+            type: String,
+            required: true,
+        },
+        status: {
+            type: String,
+            required: true,
+        },
+        premiered: {
+            type: String,
+            required: true,
+        },
+        genres: {
+            type: [String],
+            required: true,
+        },
+        duration: {
+            type: String,
+            required: true,
+        },
+        episodes: {
+            type: String,
+            required: true,
+        },
+        studio: {
+            type: String,
+            required: true,
+        },
+        producers: {
+            type: String,
+            required: true,
+        },
     },
     { timestamps: true }
 );
 
-animeSchema.plugin(mongooseAggregatePaginate);
+const episodeSchema = new Schema(
+    {
+        animeName: {
+            type: String,
+            required: true,
+        },
+        seasonNumber: {
+            type: Number,
+            required: true,
+        },
+        title: String,
+        url: {
+            sub: [
+                {
+                    server: String,
+                    url: String,
+                },
+            ],
+            dub: [
+                {
+                    server: String,
+                    url: String,
+                },
+            ],
+        },
+    },
+    { timestamps: true }
+);
 
 export const Anime = mongoose.model("Anime", animeSchema);

@@ -34,7 +34,7 @@ function Carousel() {
 
         <div className="carousel-container scroll-smooth my-[8px] md:my-[20px] flex items-center overflow-auto">
           
-          <div className="scroll-container flex gap-[10px] flex-1 overflow-auto" ref={carousel}>
+          <div className="scroll-container flex gap-[10px] flex-1 overflow-auto overflow-x-hidden" ref={carousel}>
             <ShowCard />
             <ShowCard />
             <ShowCard />

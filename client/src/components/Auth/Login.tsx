@@ -15,7 +15,7 @@ interface Login {
 const Login:React.FC<Login> = ({func, func2}) => {
 
 
-
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -24,6 +24,10 @@ const Login:React.FC<Login> = ({func, func2}) => {
     email: false,
     password: false,
   })
+  useEffect(() => {
+    setEmail('')
+    setPassword('')
+  }, [])
 
 
   const [forgotPasswor, setForgotPassword] = useState(false)
@@ -138,7 +142,7 @@ const Login:React.FC<Login> = ({func, func2}) => {
 
         <div className="input flex flex-col gpa-[8px] w-full">
           <span className='text-[11px] font-semibold text-[#b4adad]'>EMAIL ADDRESS</span>
-          <input type="email" placeholder='name@gmail.com' className={`${validUser.email ? 'valid':'invalid'} border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]`} onChange={(e) => setEmail(e.target.value) } />
+          <input type="email" placeholder='name@gmail.com' className={`${validUser.email ? 'valid':'invalid'} border-none outline-none rounded-[5px] py-[6px] px-[10px] text-[15px]`} value={email} onChange={(e) => setEmail(e.target.value) } />
         </div>
 
         <div className="input flex flex-col gpa-[8px] w-full">
