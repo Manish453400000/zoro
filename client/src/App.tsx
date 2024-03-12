@@ -12,6 +12,7 @@ import Setting from "./components/userProfile/Setting/Setting"
 import ImportExport from "./components/userProfile/ImporExport/ImportExport"
 import NotFoundPage from "./page/NotFoundPage"
 import AdminPage from "./page/AdminPage"
+import WatchPage from "./page/WatchPage"
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/user/setting" element={<Setting />} />
           <Route path="/user/import" element={<ImportExport />} />
         </Route>
+        <Route path="/watch/:animeName" element={<WatchPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
       <Footer />

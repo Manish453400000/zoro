@@ -1,4 +1,5 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 
 interface SpotlightCardProps {
   img: string,
@@ -11,7 +12,7 @@ interface SpotlightCardProps {
 }
 
 const SpotlightCard: React.FC<SpotlightCardProps> =({img, title, des, genre, duration, releasedOn, index}) => {
- 
+ const navigate = useNavigate();
   
   
   return (
@@ -58,7 +59,9 @@ const SpotlightCard: React.FC<SpotlightCardProps> =({img, title, des, genre, dur
           <div className="mt-[0px] lg:mt-[10px]">
             <button className="flex items-center gap-[5px] px-[10px] lg:px-[14px] py-[6px] bg-spacial rounded-[30px] text-black sm:mb-[18px]">
               <i className='bx bx-play-circle'></i>
-              <span className="text-[15px] lg:text-[18px]">Watch Now</span>
+              <span className="text-[15px] lg:text-[18px]" onClick={() => {
+                navigate(`/watch/${title.toLowerCase()}`)
+              }}>Watch Now</span>
             </button>
           </div>
         </div>

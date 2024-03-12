@@ -28,3 +28,24 @@
   grid-gap: 10px;
 }
 
+.data-circle{
+  position: relative;
+  border: 6px solid rgb(255, 213, 47);
+}
+circle{
+  fill: none;
+  stroke: greenyellow;
+  stroke-width: 10px;
+  stroke-dasharray: 472;
+  stroke-dashoffset: 0;
+}
+svg{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.test {
+  border: 2px solid greenyellow;
+}
+
