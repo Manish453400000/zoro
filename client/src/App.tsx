@@ -11,6 +11,7 @@ import Notification from "./components/userProfile/Notification/Notification"
 import Setting from "./components/userProfile/Setting/Setting"
 import ImportExport from "./components/userProfile/ImporExport/ImportExport"
 import NotFoundPage from "./page/NotFoundPage"
+import AdminPage from "./page/AdminPage"
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/user" element={<UserPage />}>
           <Route path="/user/profile" element={<Profile />} />
           <Route path="/user/continue-watching" element={<ContinueWatching />} />

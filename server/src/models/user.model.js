@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema(
             trim: true,
             index: true,
         },
+        isAdmin: {
+            type: Boolean,
+            enum: [true, false],
+            default: false,
+        },
         email: {
             type: String,
             required: [true, "email is required"],

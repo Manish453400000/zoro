@@ -205,6 +205,11 @@ function Header() {
               </div>
               <div className="options mt-[10px] flex flex-col gap-[8px]">
 
+               <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer" onClick={() => navigate('/admin')}>
+               <i className="fa-solid fa-user-secret text-[13px]"></i>
+                <span className='text-[13px]'>Admin</span>
+               </div>
+
                <div className="profile flex items-center gap-[14px] bg-secondary hover:bg-[#525359] hover:text-[#daf86f] px-[12px] py-[6px] rounded-[25px] cursor-pointer" onClick={() => navigate('/user/profile')}>
                 <i className="fa-solid fa-user text-[13px]"></i>
                 <span className='text-[13px]'>Profile</span>
